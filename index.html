@@ -1,245 +1,154 @@
- <button class="action" onclick="showPage('course')">
- Повернутися до уроків
- </button>`;
-
- return;
- }
-
- let html=`
-
- <h2>Урок 1. Алфавіт та вимова</h2>
-
- <h3>Мета уроку</h3>
-
- <p>Познайомитися з єврейським алфавітом,
- навчитися розпізнавати букви та читати перші слова.</p>
-
- <h3>1. Особливості івриту</h3>
-
- <p>Іврит — мова, якою розмовляють в Ізраїлі.</p>
-
- <p>Головні особливості:</p>
-
- <p>• Пишеться справа наліво.</p>
- <p>• Має 22 основні літери.</p>
- <p>• У звичайному тексті голосні часто не записуються.</p>
- <p>• Деякі літери мають особливу форму в кінці слова.</p>
-
- <h3>2. Єврейський алфавіт</h3>
-
- <p>Натискай на динамік, щоб прослухати назву букви.</p>
- `;
-
- alphabet.forEach(a=>{
-
- html+=`
- <div class="lesson">
- <div class="hebrew">${a[0]}</div>
- <b>${a[1]}</b>
- <p>${a[2]}</p>
- <button class="action" onclick="speak('${a[1]}')">
- 🔊 Слухати
- </button>
- </div>`;
-
- });
-
- html+=`
-
- <h3>3. Кінцеві форми букв</h3>
-
- <p>П'ять букв змінюють написання наприкінці слова:</p>
-
- <div class="hebrew">כ — ך</div>
- <div class="hebrew">מ — ם</div>
- <div class="hebrew">נ — ן</div>
- <div class="hebrew">פ — ף</div>
- <div class="hebrew">צ — ץ</div>
-
- <h3>4. Перші слова</h3>
-
- <div class="hebrew">שלום</div>
- <p class="trans">Шалом</p>
- <p>Привіт, мир.</p>
- <button class="action" onclick="speak('שלום')">🔊 Слухати</button>
-
- <div class="hebrew">תודה</div>
- <p class="trans">Тода</p>
- <p>Дякую.</p>
- <button class="action" onclick="speak('תודה')">🔊 Слухати</button>
-
- <div class="hebrew">אבא</div>
- <p class="trans">Аба</p>
- <p>Тато.</p>
- <button class="action" onclick="speak('אבא')">🔊 Слухати</button>
-
- <div class="hebrew">אמא</div>
- <p class="trans">Іма</p>
- <p>Мама.</p>
- <button class="action" onclick="speak('אמא')">🔊 Слухати</button>
-
- <h3>5. Перевір свої знання</h3>
-
- <p>Відповідай на п'ять запитань.</p>
-
- <div id="quiz"></div>
- `;
-
- document.getElementById("lessonContent").innerHTML=html;
-
- renderQuiz();
-}
-
-const questions=[
-
- {
- q:"У якому напрямку пишеться іврит?",
- a:["Зліва направо","Справа наліво","Зверху вниз"],
- c:1,
- e:"Іврит пишеться справа наліво."
- },
-
- {
- q:"Скільки основних букв в алфавіті?",
- a:["22","26","30"],
- c:0,
- e:"Єврейський алфавіт має 22 основні букви."
- },
-
- {
- q:"Як перекладається שלום?",
- a:["Дякую","Привіт, мир","До побачення"],
- c:1,
- e:"שלום — шалом."
- },
-
- {
- q:"Як перекладається תודה?",
- a:["Дякую","Будь ласка","Добрий ранок"],
- c:0,
- e:"תודה — тода, дякую."
- },
-
- {
- q:"Як перекладається אבא?",
- a:["Мама","Брат","Тато"],
- c:2,
- e:"אבא — аба, тато."
- }
-
-];
-
-function renderQuiz(){
-
- let html="";
-
- questions.forEach((q,i)=>{
-
- html+=`
- <div class="card">
- <h3>Запитання ${i+1}</h3>
- <p>${q.q}</p>
-
- ${q.a.map((a,j)=>`
- <button class="answer"
- onclick="checkAnswer(${i},${j},this)">
- ${a}
- </button>`).join("")}
-
- <div id="result${i}"></div>
- </div>`;
-
- });
-
- html+=`
- <button class="action" onclick="finishQuiz()">
- Завершити тест
- </button>`;
-
- document.getElementById("quiz").innerHTML=html;
-
- window.answers={};
-}
-
-function checkAnswer(i,j,btn){
-
- if(window.answers[i]!==undefined)return;
-
- let q=questions[i];
-
- let correct=j===q.c;
-
- window.answers[i]=correct;
-
- document.getElementById("result"+i).innerHTML=
- `<div class="result">
- ${correct?"✓ Правильно!":"✗ Неправильно."}
- ${q.e}
- </div>`;
-
- btn.style.background=correct?"#d5f5e6":"#ffe1e1";
-
- btn.parentElement.querySelectorAll("button.answer")
- .forEach(b=>b.disabled=true);
-}
-
-function finishQuiz(){
-
- let count=Object.keys(window.answers).length;
-
- if(count<questions.length){
- alert("Дайте відповідь на всі запитання.");
- return;
- }
-
- let score=Object.values(window.answers)
- .filter(Boolean).length;
-
- points+=score*10;
-
- if(score>=4&&!completed.includes(0)){
- completed.push(0);
- }
-
- save();
-
- renderLessons();
-
- alert(
- "Ваш результат: "+score+" із 5.\n"+
- (score>=4?
- "Вітаємо! Урок зараховано!":
- "Потрібно повторити матеріал.")
- );
-}
-
-function renderWords(){
-
- document.getElementById("words").innerHTML=
- vocabulary.map(w=>`
- <div class="lesson">
- <div class="hebrew">${w[0]}</div>
- <div class="trans">${w[1]}</div>
- <p>${w[2]}</p>
- <button class="action" onclick="speak('${w[0]}')">
- 🔊 Слухати
- </button>
- </div>`).join("");
-}
-
-renderLessons();
-renderWords();
-updateProgress();
-
-if("serviceWorker" in navigator){
- window.addEventListener("load",()=>{
- navigator.serviceWorker.register("./service-worker.js")
- .catch(error=>console.log("SW:",error));
- });
-}
-
-</script>
-
-</body>
-</html>
-```
+```html
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17365d">
+<title>IVRIT PRO</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial;background:#f2f5fa;color:#24344a}
+header{background:linear-gradient(135deg,#17365d,#246b91);color:white;padding:30px 15px;text-align:center}
+header h1{font-size:32px;letter-spacing:3px;margin:0}
+nav{display:flex;overflow-x:auto;gap:7px;padding:10px;background:white;position:sticky;top:0}
+button{cursor:pointer;border:0;border-radius:9px;padding:12px}
+nav button,.secondary{background:#eaf0f7;color:#17365d;font-weight:bold}
+main{max-width:800px;margin:auto;padding:14px}
+.card{background:white;border-radius:14px;padding:19px;margin-bottom:14px;box-shadow:0 3px 14px #0000000a}
+h2,h3{color:#17365d}
+.primary{background:#17365d;color:white;padding:14px 20px}
+.lesson-item{background:white;border:1px solid #dce5ef;padding:15px;border-radius:11px;margin:10px 0}
+.hebrew{direction:rtl;text-align:right;font-size:29px;color:#17365d;font-weight:bold;margin:12px 0}
+.trans{color:#16816e}
+.word{border-bottom:1px solid #e5eaf0;padding:12px 0}
+.answer{display:block;width:100%;text-align:left;padding:14px;margin:8px 0;background:#f1f5fa;border:1px solid #dce5ef;font-size:16px}
+.answer:disabled{opacity:.9}
+.correct{background:#d8f3e4!important}
+.wrong{background:#ffe1e1!important}
+.progress{height:13px;background:#e3eaf2;border-radius:20px;overflow:hidden}
+.progress div{height:100%;background:#21a68b;width:0}
+.hidden{display:none}
+.result{padding:12px;background:#e7f6ef;border-radius:9px;margin-top:10px}
+.small{font-size:13px;color:#7a899a}
+footer{text-align:center;color:#8491a1;padding:25px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>IVRIT PRO</h1>
+<p>Вивчай іврит. Розумій. Читай. Розмовляй.</p>
+</header>
+
+<nav>
+<button onclick="showPage('home')">Головна</button>
+<button onclick="showPage('course')">Уроки</button>
+<button onclick="showPage('dictionary')">Словник</button>
+<button onclick="showPage('progress')">Мій прогрес</button>
+</nav>
+
+<main>
+<section id="home">
+<div class="card">
+<h2>שלום! Шалом!</h2>
+<h3>Ласкаво просимо до IVRIT PRO!</h3>
+<p>Повноцінна навчальна програма з вивчення сучасного івриту.</p>
+<h3>Мій прогрес</h3>
+<div class="progress"><div id="bar"></div></div>
+<p id="progressText"></p>
+<button class="primary" onclick="openLesson(0)">Почати навчання</button>
+</div>
+<div class="card">
+<h3>Програма навчання</h3>
+<p>✓ Алфавіт і читання</p>
+<p>✓ Вимова та граматика</p>
+<p>✓ Словниковий запас</p>
+<p>✓ Теперішній, минулий і майбутній час</p>
+<p>✓ Розмовна практика</p>
+<p>✓ Тести та перевірка знань</p>
+</div>
+</section>
+
+<section id="course" class="hidden">
+<div class="card">
+<h2>Навчальна програма</h2>
+<div id="lessonList"></div>
+</div>
+</section>
+
+<section id="lessonPage" class="hidden">
+<div class="card">
+<button class="secondary" onclick="showPage('course')">← До програми</button>
+<div id="lessonContent"></div>
+</div>
+</section>
+
+<section id="dictionary" class="hidden">
+<div class="card">
+<h2>Словник івриту</h2>
+<input id="searchWord" placeholder="Пошук слова..." oninput="renderDictionary()" style="width:100%;padding:13px;border:1px solid #ccd7e3;border-radius:9px">
+<div id="dictionaryList"></div>
+</div>
+</section>
+
+<section id="progress" class="hidden">
+<div class="card">
+<h2>Мої досягнення</h2>
+<h3 id="completedText"></h3>
+<h3 id="pointsText"></h3>
+<div class="progress"><div id="bar2"></div></div>
+</div>
+</section>
+</main>
+
+<footer>IVRIT PRO © 2026</footer>
+
+<script>
+const lessons=[
+{
+title:"Алфавіт та вимова",
+goal:"Познайомитися з єврейським алфавітом.",
+theory:["Іврит — державна мова Ізраїлю.","Іврит пишеться справа наліво.","Алфавіт має 22 основні літери.","Голосні часто не записуються.","П'ять літер мають спеціальну кінцеву форму."],
+words:[["שלום","шалом","Привіт, мир"],["תודה","тода","Дякую"],["אבא","аба","Тато"],["אמא","іма","Мама"],["בית","байт","Будинок"]],
+phrase:["שלום! קוראים לי אלכסנדר.","Шалом! Кор'ім лі Олександр.","Привіт! Мене звати Олександр."],
+quiz:[["У якому напрямку пишеться іврит?",["Зліва направо","Справа наліво","Зверху вниз"],1],["Скільки літер має алфавіт?",["22","26","30"],0],["Що означає תודה?",["Привіт","Дякую","До побачення"],1]]
+},
+{
+title:"Голосні та читання",
+goal:"Навчитися читати прості слова.",
+theory:["Голосні позначаються спеціальними знаками — нікуд.","Нікуд часто використовується в навчальних текстах.","У повсякденному тексті голосні переважно не позначаються."],
+words:[["אֲנִי","ані","Я"],["אַתָּה","ата","Ти (чоловік)"],["אַתְּ","ат","Ти (жінка)"],["שָׁלוֹם","шалом","Мир"],["סֵפֶר","сефер","Книга"]],
+phrase:["אני קורא ספר.","Ані коре сефер.","Я читаю книгу."],
+quiz:[["Як називаються знаки голосних?",["Нікуд","Шалом","Алеф"],0],["Як читається אני?",["Ата","Ані","Ана"],1],["Що означає ספר?",["Книга","Будинок","Вода"],0]]
+},
+{
+title:"Привітання та знайомство",
+goal:"Навчитися представлятися.",
+theory:["שלום — привіт.","בוקר טוב — доброго ранку.","ערב טוב — доброго вечора.","נעים מאוד — дуже приємно.","קוראים לי — мене звати."],
+words:[["שלום","шалом","Привіт"],["בוקר טוב","бокер тов","Доброго ранку"],["ערב טוב","ерев тов","Добрий вечір"],["מה שלומך?","ма шломха","Як справи?"],["נעים מאוד","наїм меод","Дуже приємно"]],
+phrase:["קוראים לי אלכסנדר.","Кор'ім лі Олександр.","Мене звати Олександр."],
+quiz:[["Що означає בוקר טוב?",["Добрий вечір","Доброго ранку","На добраніч"],1],["Як сказати «Мене звати»?",["קוראים לי","תודה","שלום"],0],["Що означає נעים מאוד?",["До побачення","Дуже приємно","Дякую"],1]]
+},
+{
+title:"Особові займенники",
+goal:"Навчитися використовувати займенники.",
+theory:["אני — я.","אתה — ти (чоловік).","את — ти (жінка).","הוא — він.","היא — вона.","אנחנו — ми.","הם — вони."],
+words:[["אני","ані","Я"],["אתה","ата","Ти"],["הוא","гу","Він"],["היא","гі","Вона"],["אנחנו","анахну","Ми"]],
+phrase:["אני תלמיד.","Ані талмід.","Я учень."],
+quiz:[["Як буде «я»?",["אתה","אני","הוא"],1],["Як буде «вона»?",["היא","הוא","את"],0],["Як буде «ми»?",["אני","הם","אנחנו"],2]]
+},
+{
+title:"Числа та вік",
+goal:"Навчитися називати числа.",
+theory:["אחד — один.","שתיים — два.","שלוש — три.","עשר — десять.","עשרים — двадцять."],
+words:[["אחד","ехад","Один"],["שתיים","штаїм","Два"],["שלוש","шалош","Три"],["עשר","есер","Десять"],["עשרים","есрім","Двадцять"]],
+phrase:["אני בן שלושים.","Ані бен шлошім.","Мені тридцять років."],
+quiz:[["Що означає אחד?",["Один","Два","Три"],0],["Що означає עשר?",["Двадцять","Десять","П'ять"],1],["Як сказати «Мені 30 років»?",["אני בן שלושים","אני בית","אני עשר"],0]]
+},
+{
+title:"Моя сім'я",
+goal:"Навчитися розповідати про сім'ю.",
+theory:["משפחה — сім'я.","אבא — тато.","אמא — мама.","אח — брат.","אחות — сестра.","שלי — мій або моя."],
+words:[["משפחה","мішпаха","Сім'я"],["אבא","аба","Тато"],["אמא","іма","Мама"],["אח","ах","Брат"],["אחות","ахот","Сестра"]],
+phrase:["זאת המשפחה שלי.","Зот а-мішпаха шелі.","Це моя сім'я."],
