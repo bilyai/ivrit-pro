@@ -1,0 +1,26 @@
+```xml
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512">
+
+<rect width="512" height="512"
+      rx="110" fill="#17365d"/>
+
+<circle cx="256" cy="256" r="175"
+        fill="#ffffff"/>
+
+<text x="256" y="290"
+      text-anchor="middle"
+      font-size="145"
+      font-weight="bold"
+      fill="#17365d"
+      font-family="Arial">א</text>
+
+<text x="256" y="390"
+      text-anchor="middle"
+      font-size="42"
+      font-weight="bold"
+      fill="#21a68b"
+      font-family="Arial">IVRIT</text>
+
+</svg>
+```
