@@ -4,372 +4,291 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IVRIT PRO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #eff6ff;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #e0e7ff;
             --accent: #f59e0b;
             --success: #10b981;
             --error: #ef4444;
-            --bg: #f8fafc;
+            --bg: #f3f4f6;
             --card: #ffffff;
-            --text: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+            --text: #1f2937;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
         }
 
         [data-theme="dark"] {
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --primary-light: #1e293b;
-            --bg: #0f172a;
-            --card: #1e293b;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #312e81;
+            --bg: #111827;
+            --card: #1f2937;
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+            --border: #374151;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
-            padding-bottom: 90px;
+            padding-bottom: 95px;
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Header */
+        /* Заголовок додатку */
         header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 18px 20px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 50;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
         }
 
-        .logo {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo span {
-            background: rgba(255,255,255,0.2);
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-        }
+        .logo { font-size: 22px; font-weight: 900; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
+        .logo span { background: rgba(255,255,255,0.25); padding: 3px 10px; border-radius: 8px; font-size: 13px; font-weight: 800; }
 
         .theme-btn {
-            background: rgba(255,255,255,0.18);
-            border: none;
-            color: white;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
+            background: rgba(255,255,255,0.2);
+            border: none; color: white; width: 40px; height: 40px;
+            border-radius: 50%; font-size: 18px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s;
         }
         .theme-btn:active { transform: scale(0.9); }
 
-        .container {
-            padding: 18px;
-            max-width: 540px;
-            margin: 0 auto;
-        }
-
+        .container { padding: 20px; max-width: 540px; margin: 0 auto; }
         .screen { display: none; animation: fadeIn 0.25s ease; }
         .screen.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Progress Hero Card */
-        .hero-card {
+        /* Преміальний банер на головній */
+        .welcome-banner {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .welcome-banner::after {
+            content: "🇮🇱";
+            position: absolute;
+            right: -10px;
+            bottom: -20px;
+            font-size: 100px;
+            opacity: 0.15;
+        }
+        .banner-title { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
+        .banner-subtitle { font-size: 14px; opacity: 0.9; margin-bottom: 18px; line-height: 1.4; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 16px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stat-icon { font-size: 22px; }
+        .stat-info .val { font-size: 16px; font-weight: 800; }
+        .stat-info .lbl { font-size: 11px; opacity: 0.8; }
+
+        /* Прогрес-бар на головній */
+        .progress-card {
             background: var(--card);
             border-radius: 20px;
-            padding: 20px;
+            padding: 18px 20px;
             margin-bottom: 20px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
-        }
-
-        .hero-top {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            gap: 16px;
         }
-
-        .hero-title { font-size: 15px; font-weight: 600; color: var(--text-muted); }
-        .hero-stat { font-size: 18px; font-weight: 800; color: var(--primary); }
-
-        .progress-track {
-            width: 100%;
-            height: 10px;
-            background: var(--border);
-            border-radius: 99px;
-            overflow: hidden;
+        .progress-circle {
+            width: 54px; height: 54px; border-radius: 50%;
+            background: var(--primary-light); color: var(--primary);
+            font-weight: 900; font-size: 15px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
+        .progress-bar-wrap { flex: 1; }
+        .progress-bar-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+        .progress-track { width: 100%; height: 8px; background: var(--border); border-radius: 99px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary); width: 0%; border-radius: 99px; transition: width 0.5s; }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #60a5fa);
-            width: 0%;
-            border-radius: 99px;
-            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Lesson Cards */
+        /* Списки уроків */
+        .section-header { font-size: 18px; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+        
         .lesson-card {
             background: var(--card);
-            border-radius: 16px;
-            padding: 16px;
+            border-radius: 18px;
+            padding: 16px 18px;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
             cursor: pointer;
             transition: transform 0.15s, border-color 0.2s;
         }
-
         .lesson-card:active { transform: scale(0.98); }
-        .lesson-card.done { border-left: 4px solid var(--success); }
+        .lesson-card.done { border-left: 5px solid var(--success); }
 
         .lesson-num {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: var(--primary-light);
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            width: 48px; height: 48px; border-radius: 14px;
+            background: var(--primary-light); color: var(--primary);
+            font-weight: 900; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-
-        .lesson-card.done .lesson-num {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success);
-        }
+        .lesson-card.done .lesson-num { background: rgba(16, 185, 129, 0.15); color: var(--success); }
 
         .lesson-info { flex: 1; }
-        .lesson-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
-        .lesson-info p { font-size: 13px; color: var(--text-muted); }
-        .lesson-arrow { color: var(--text-muted); font-weight: bold; font-size: 18px; }
+        .lesson-info h3 { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
+        .lesson-info p { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+        .lesson-arrow { width: 32px; height: 32px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--text-muted); }
 
-        /* Word Cards */
+        /* Елементи уроку */
         .word-card {
-            background: var(--card);
-            border-radius: 18px;
-            padding: 18px;
-            margin-bottom: 14px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
+            background: var(--card); border-radius: 18px; padding: 18px;
+            margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; gap: 12px;
         }
-
         .word-left { flex: 1; }
-        .word-ua { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-        .word-tr { font-size: 14px; color: var(--text-muted); font-weight: 500; }
-
-        .word-right {
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
-        }
-
-        .hebrew-text {
-            font-family: 'Rubik', sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--primary);
-            direction: rtl;
-        }
+        .word-ua { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+        .word-tr { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        .hebrew-text { font-family: 'Rubik', sans-serif; font-size: 26px; font-weight: 700; color: var(--primary); direction: rtl; text-align: right; }
 
         .audio-pill {
-            background: var(--primary-light);
-            color: var(--primary);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 99px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: 0.15s;
+            background: var(--primary-light); color: var(--primary); border: none;
+            padding: 6px 12px; border-radius: 99px; font-size: 12px; font-weight: 700;
+            cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin-top: 6px;
         }
-        .audio-pill:active { transform: scale(0.92); background: var(--primary); color: white; }
 
-        /* Buttons */
+        .dialogue-box {
+            background: var(--card); border-radius: 20px; padding: 20px;
+            margin-bottom: 16px; border: 1px solid var(--border); box-shadow: var(--shadow);
+        }
+        .dialogue-line { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .dialogue-line:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .speaker { font-weight: 800; font-size: 12px; color: var(--accent); text-transform: uppercase; margin-bottom: 2px; }
+
         .btn-main {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-            transition: 0.15s;
-            margin-top: 8px;
+            width: 100%; background: var(--primary); color: white; border: none;
+            padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 800;
+            cursor: pointer; box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3); margin-top: 12px;
+            transition: transform 0.1s;
         }
         .btn-main:active { transform: scale(0.98); }
-
         .btn-secondary {
-            width: 100%;
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-            padding: 13px;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
+            width: 100%; background: transparent; color: var(--text-muted); border: 1px solid var(--border);
+            padding: 14px; border-radius: 16px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px;
         }
 
-        /* Search Input */
-        .search-wrap { position: relative; margin-bottom: 16px; }
-        .search-input {
-            width: 100%;
-            padding: 14px 16px 14px 42px;
-            border-radius: 14px;
-            border: 1px solid var(--border);
-            background: var(--card);
-            color: var(--text);
-            font-size: 15px;
-            outline: none;
-            box-shadow: var(--shadow);
-        }
-        .search-input:focus { border-color: var(--primary); }
-        .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-
-        /* Quiz Options */
         .quiz-option {
-            width: 100%;
-            text-align: left;
-            background: var(--card);
-            color: var(--text);
-            border: 2px solid var(--border);
-            padding: 15px 18px;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: 0.15s;
+            width: 100%; text-align: left; background: var(--card); color: var(--text);
+            border: 2px solid var(--border); padding: 15px 18px; border-radius: 16px;
+            font-size: 15px; font-weight: 700; margin-bottom: 10px; cursor: pointer; transition: 0.15s;
         }
         .quiz-option:active { transform: scale(0.98); }
         .quiz-option.correct { border-color: var(--success); background: rgba(16, 185, 129, 0.12); color: var(--success); }
         .quiz-option.wrong { border-color: var(--error); background: rgba(239, 68, 68, 0.12); color: var(--error); }
 
-        /* Bottom Navigation */
+        .search-wrap { position: relative; margin-bottom: 16px; }
+        .search-input {
+            width: 100%; padding: 15px 18px 15px 46px; border-radius: 16px;
+            border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 15px; outline: none; box-shadow: var(--shadow);
+        }
+        .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; }
+
+        /* Нижнє меню */
         nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--card);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0 14px;
-            z-index: 100;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.04);
+            position: fixed; bottom: 0; left: 0; right: 0; background: var(--card);
+            border-top: 1px solid var(--border); display: flex; justify-content: space-around;
+            padding: 12px 0 18px; z-index: 100; box-shadow: 0 -10px 25px rgba(0,0,0,0.05);
         }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: var(--text-muted);
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            flex: 1;
-            transition: 0.2s;
-        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; cursor: pointer; flex: 1; transition: 0.2s; }
         .nav-item.active { color: var(--primary); }
-        .nav-icon { font-size: 22px; transition: transform 0.2s; }
-        .nav-item.active .nav-icon { transform: translateY(-2px); }
+        .nav-icon { font-size: 22px; }
 
-        .lesson-header-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-        .back-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            color: var(--text);
-            font-size: 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .lesson-header-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+        .back-circle { width: 44px; height: 44px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo">🇮🇱 IVRIT <span>PRO</span></div>
-        <button class="theme-btn" onclick="toggleTheme()" id="theme-icon" title="Змінити тему">🌙</button>
+        <button class="theme-btn" onclick="toggleTheme()" id="theme-icon">🌙</button>
     </header>
 
     <div class="container">
-        <!-- ЕКРАН 1: УРОКИ -->
+        <!-- ЕКРАН 1: УРОКИ (ГОЛОВНА) -->
         <div id="screen-lessons" class="screen active">
             <div id="lessons-home-view">
-                <div class="hero-card">
-                    <div class="hero-top">
-                        <span class="hero-title">Твій прогрес курсу</span>
-                        <span class="hero-stat"><span id="completed-count">0</span> / 30</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" id="progress-bar"></div>
+                
+                <!-- Новий преміальний банер -->
+                <div class="welcome-banner">
+                    <div class="banner-title">Вивчай іврит щодня ✨</div>
+                    <div class="banner-subtitle">Пройди повний курс із 30 інтерактивних уроків з аудіо та практикою.</div>
+                    <div class="stats-grid">
+                        <div class="stat-pill">
+                            <span class="stat-icon">🔥</span>
+                            <div class="stat-info">
+                                <div class="val" id="streak-count">1 день</div>
+                                <div class="lbl">Серія навчання</div>
+                            </div>
+                        </div>
+                        <div class="stat-pill">
+                            <span class="stat-icon">⭐</span>
+                            <div class="stat-info">
+                                <div class="val" id="total-score-banner">0 балів</div>
+                                <div class="lbl">Твій прогрес</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Візуальний прогрес -->
+                <div class="progress-card">
+                    <div class="progress-circle" id="progress-percent">0%</div>
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar-label">
+                            <span>Загальний прогрес</span>
+                            <span id="completed-count-text">0 / 30 уроків</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <span>Уроки курсу</span>
+                    <span style="font-size: 13px; color: var(--primary); font-weight: 700;">Рівень: Базовий</span>
+                </div>
+
                 <div id="lessons-list"></div>
             </div>
 
@@ -378,11 +297,20 @@
                 <div class="lesson-header-bar">
                     <button class="back-circle" onclick="closeLesson()">←</button>
                     <div>
-                        <div style="font-size: 12px; color: var(--primary); font-weight: 700;" id="detail-badge">УРОК 1</div>
-                        <h2 style="font-size: 18px; font-weight: 800;" id="detail-title">Назва уроку</h2>
+                        <div style="font-size: 12px; color: var(--primary); font-weight: 800; letter-spacing: 0.5px;" id="detail-badge">УРОК 1</div>
+                        <h2 style="font-size: 18px; font-weight: 900;" id="detail-title">Назва уроку</h2>
                     </div>
                 </div>
+
+                <div class="section-header" style="font-size: 16px;">💬 Практичний діалог</div>
+                <div id="lesson-dialogue-container"></div>
+
+                <div class="section-header" style="font-size: 16px;">📚 Лексика уроку (20+ слів)</div>
                 <div id="lesson-words-container"></div>
+
+                <div class="section-header" style="font-size: 16px;">🎯 Перевірка знань</div>
+                <div class="welcome-banner" style="background: var(--card); color: var(--text); border: 1px solid var(--border);" id="lesson-quiz-container"></div>
+
                 <button class="btn-main" id="complete-btn" onclick="markLessonDone()">✅ Завершити урок</button>
                 <button class="btn-secondary" onclick="closeLesson()">Повернутися до списку</button>
             </div>
@@ -390,45 +318,43 @@
 
         <!-- ЕКРАН 2: СЛОВНИК -->
         <div id="screen-dict" class="screen">
+            <div class="section-header">Офлайн-словник</div>
             <div class="search-wrap">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="search-box" class="search-input" placeholder="Пошук українською або транскрипцією..." oninput="searchDictionary()">
+                <input type="text" id="search-box" class="search-input" placeholder="Пошук слів або транскрипції..." oninput="searchDictionary()">
             </div>
             <div id="dictionary-list"></div>
         </div>
 
         <!-- ЕКРАН 3: ТЕСТИ -->
         <div id="screen-tests" class="screen">
-            <div class="hero-card">
+            <div class="section-header">Тренування та іспит</div>
+            <div class="welcome-banner" style="background: var(--card); color: var(--text); border: 1px solid var(--border);">
                 <div style="display:flex; justify-content:space-between; margin-bottom:14px;">
-                    <span style="font-size:13px; font-weight:700; color:var(--primary); text-transform:uppercase;">Перевірка знань</span>
-                    <span style="font-size:13px; font-weight:700; color:var(--success);">Бали: <span id="quiz-score">0</span></span>
+                    <span style="font-size:12px; font-weight:800; color:var(--primary); text-transform:uppercase;">Інтерактивна вікторина</span>
+                    <span style="font-size:13px; font-weight:800; color:var(--success);">Бали: <span id="quiz-score">0</span></span>
                 </div>
-                <div id="test-question" style="font-size: 20px; font-weight: 800; margin-bottom: 18px; line-height: 1.4;"></div>
+                <div id="test-question" style="font-size: 19px; font-weight: 800; margin-bottom: 18px; line-height: 1.4;"></div>
                 <div id="test-options"></div>
             </div>
-            <button class="btn-main" onclick="loadTest()">Наступне питання →</button>
+            <button class="btn-main" onclick="loadGlobalTest()">Наступне питання →</button>
         </div>
     </div>
 
     <!-- НИЖНЯ НАВІГАЦІЯ -->
     <nav>
         <div class="nav-item active" onclick="switchScreen('lessons', this)">
-            <span class="nav-icon">📚</span>
-            <span>Уроки</span>
+            <span class="nav-icon">📚</span><span>Уроки</span>
         </div>
         <div class="nav-item" onclick="switchScreen('dict', this)">
-            <span class="nav-icon">📖</span>
-            <span>Словник</span>
+            <span class="nav-icon">📖</span><span>Словник</span>
         </div>
         <div class="nav-item" onclick="switchScreen('tests', this)">
-            <span class="nav-icon">🎯</span>
-            <span>Тести</span>
+            <span class="nav-icon">🎯</span><span>Тести</span>
         </div>
     </nav>
 
     <script>
-        // Тема (Світла / Темна)
         function toggleTheme() {
             const isDark = document.body.getAttribute('data-theme') === 'dark';
             document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
@@ -440,7 +366,6 @@
             document.getElementById('theme-icon').innerText = '☀️';
         }
 
-        // Назви всіх 30 уроків
         const lessonTitles = [
             "Алфавіт та огласівки (Нікуд)", "Привітання та знайомство", "Числівники (1–10)", 
             "Родина та члени сім'ї", "Професії та заняття", "Кольори та прикметники", 
@@ -452,197 +377,47 @@
             "Діловий та офіційний іврит", "Розмовний сленг Ізраїлю", "Ідіоми та стійкі вирази", "Підсумковий іспит курсу"
         ];
 
-        // Повний контент для всіх 30 уроків
-        const lessonContents = {
-            1: [
-                { he: "שָׁלוֹם", tr: "шалом", ua: "Привіт / Мир" },
-                { he: "בּוֹקֶר טוֹב", tr: "бокер тов", ua: "Доброго ранку" },
-                { he: "עֶרֶב טוֹב", tr: "ерев тов", ua: "Доброго вечора" },
-                { he: "תּוֹדָה רַבָּה", tr: "тода раба", ua: "Дуже дякую" }
-            ],
-            2: [
-                { he: "מַה שְׁלוֹמְךָ?", tr: "ма шломха?", ua: "Як твої справи? (до чол.)" },
-                { he: "מַה שְׁלוֹמֵךְ?", tr: "ма шломех?", ua: "Як твої справи? (до жін.)" },
-                { he: "נָעִים מְאוֹד", tr: "наім меод", ua: "Дуже приємно" },
-                { he: "לְהִתְרָאוֹת", tr: "лехітраот", ua: "До побачення" }
-            ],
-            3: [
-                { he: "אַחַת", tr: "ахат", ua: "Один (демо жін.)" },
-                { he: "שְׁתַּיִם", tr: "штаїм", ua: "Два (демо жін.)" },
-                { he: "שָׁלוֹשׁ", tr: "шалош", ua: "Три" },
-                { he: "אַרְבַּע", tr: "арба", ua: "Чотири" }
-            ],
-            4: [
-                { he: "אַבָּא", tr: "аба", ua: "Тато" },
-                { he: "אִמָּא", tr: "іма", ua: "Мама" },
-                { he: "אָח", tr: "ах", ua: "Брат" },
-                { he: "אָחוֹת", tr: "ахот", ua: "Сестра" }
-            ],
-            5: [
-                { he: "מוֹרֶה", tr: "море", ua: "Вчитель" },
-                { he: "רוֹפֵא", tr: "рофе", ua: "Лікар" },
-                { he: "מְנַהֵל", tr: "менагель", ua: "Менеджер / Директор" },
-                { he: "סＴוֹדֶנְט", tr: "студент", ua: "Студент" }
-            ],
-            6: [
-                { he: "אָדֹם", tr: "адом", ua: "Червоний" },
-                { he: "כָּחוֹל", tr: "кахоль", ua: "Синій" },
-                { he: "יָרֹק", tr: "ярок", ua: "Зелений" },
-                { he: "צָהֹב", tr: "цахов", ua: "Жовтий" }
-            ],
-            7: [
-                { he: "יוֹם רִאשׁוֹן", tr: "йом ришон", ua: "Неділя" },
-                { he: "יוֹם שֵׁנִי", tr: "йом шени", ua: "Понеділок" },
-                { he: "בּוֹקֶר", tr: "бокер", ua: "Ранок" },
-                { he: "עֶרֶב", tr: "ерев", ua: "Вечір" }
-            ],
-            8: [
-                { he: "מַיִם", tr: "маїм", ua: "Вода" },
-                { he: "לֶחֶם", tr: "лехем", ua: "Хліб" },
-                { he: "חָלָב", tr: "халав", ua: "Молоко" },
-                { he: "גְּבִינָה", tr: "гвіна", ua: "Сир" }
-            ],
-            9: [
-                { he: "קָפֶה", tr: "кафе", ua: "Кава" },
-                { he: "תֵּה", tr: "те", ua: "Чай" },
-                { he: "חֶשְׁבּוֹן", tr: "хешбон", ua: "Рахунок (у закладі)" },
-                { he: "טָעִים", tr: "таім", ua: "Смачно" }
-            ],
-            10: [
-                { he: "כַּמָּה זֶה עוֹלֶה?", tr: "кама зе оле?", ua: "Скільки це коштує?" },
-                { he: "יָקָר", tr: "якар", ua: "Дорого" },
-                { he: "זוֹל", tr: "золь", ua: "Дешево" },
-                { he: "חֲנוּת", tr: "ханут", ua: "Магазин" }
-            ],
-            11: [
-                { he: "אוֹטוֹבּוּס", tr: "отобус", ua: "Автобус" },
-                { he: "רַכֶּבֶת", tr: "ракевет", ua: "Поїзд" },
-                { he: "רְחוֹ", tr: "рехо", ua: "Вулиця" },
-                { he: "תַּחֲנָה", tr: "тахана", ua: "Станція / Зупинка" }
-            ],
-            12: [
-                { he: "בֵּית חוֹלִים", tr: "бейт холим", ua: "Лікарня" },
-                { he: "בְּרִיאוּת", tr: "бриут", ua: "Здоров'я / Будьте здорові" },
-                { he: "כּוֹאֵב לִי", tr: "коев ли", ua: "Мені болить" },
-                { he: "תְּרוּפָה", tr: "труфа", ua: "Ліки" }
-            ],
-            13: [
-                { he: "מָלוֹן", tr: "малон", ua: "Готель" },
-                { he: "כַּרְטִיס", tr: "картис", ua: "Квиток" },
-                { he: "מַטּוֹס", tr: "матос", ua: "Літак" },
-                { he: "חֻפְשָׁה", tr: "хупша", ua: "Відпустка / Відпочинок" }
-            ],
-            14: [
-                { he: "לוֹמֵד", tr: "ломед", ua: "Вчуся (чол.)" },
-                { he: "עוֹבֵד", tr: "овед", ua: "Працюю (чол.)" },
-                { he: "גוֹרֵה", tr: "горе", ua: "Живу" },
-                { he: "רוֹצֶה", tr: "роце", ua: "Хочу" }
-            ],
-            15: [
-                { he: "עָשִׂיתִי", tr: "асити", ua: "Я зробив" },
-                { he: "אָכַלְתִּי", tr: "ахальти", ua: "Я зїв" },
-                { he: "שָׁתִיתִי", tr: "шатити", ua: "Я випив" },
-                { he: "רָאִיתִי", tr: "раити", ua: "Я бачив" }
-            ],
-            16: [
-                { he: "טֶלֶפוֹן", tr: "телефон", ua: "Телефон" },
-                { he: "מַחְשֵׁב", tr: "махшев", ua: "Комп'ютер" },
-                { he: "אינטרנט", tr: "интернет", ua: "Інтернет" },
-                { he: "סִסְמָה", tr: "сисма", ua: "Пароль" }
-            ],
-            17: [
-                { he: "חַם", tr: "хам", ua: "Спекотно / Тепло" },
-                { he: "קַר", tr: "кар", ua: "Холодно" },
-                { he: "גֶּשֶׁם", tr: "гешем", ua: "Дощ" },
-                { he: "שֶׁמֶשׁ", tr: "шемеш", ua: "Сонце" }
-            ],
-            18: [
-                { he: "שׂוֹחֶה", tr: "сохе", ua: "Плаваю" },
-                { he: "רוֹكֵד", tr: "рокед", ua: "Танцюю" },
-                { he: "סְפּוֹרְט", tr: "спорт", ua: "Спорт" },
-                { he: "מִשְׂחָק", tr: "мисхак", ua: "Гра" }
-            ],
-            19: [
-                { he: "מַה הַשָּׁעָה?", tr: "ма ха-шаа?", ua: "Котра година?" },
-                { he: "הַיּוֹם", tr: "хайом", ua: "Сьогодні" },
-                { he: "מָחָר", tr: "махар", ua: "Завтра" },
-                { he: "אֶתְמוֹל", tr: "этмоль", ua: "Вчора" }
-            ],
-            20: [
-                { he: "בַּיִת", tr: "баіт", ua: "Дім / Будинок" },
-                { he: "חֶדֶר", tr: "хедер", ua: "Кімната" },
-                { he: "מִטָּה", tr: "мита", ua: "Ліжко" },
-                { he: "מַטְבֵּחַ", tr: "матбеа", ua: "Кухня" }
-            ],
-            21: [
-                { he: "בְּגָדִים", tr: "бегадим", ua: "Одяг" },
-                { he: "נַעֲלַיִם", tr: "наалаїм", ua: "Взуття" },
-                { he: "חֻלְצָה", tr: "хульца", ua: "Сорочка / Футболка" },
-                { he: "מִכְנָסַיִם", tr: "михнасаїм", ua: "Штани" }
-            ],
-            22: [
-                { he: "שָׂמֵחַ", tr: "самеах", ua: "Веселий / Радісний" },
-                { he: "עָצֵב", tr: "ацев", ua: "Сумний" },
-                { he: "עָיֵף", tr: "аєф", ua: "Втомлений" },
-                { he: "רוֹגֵעַ", tr: "рогеа", ua: "Спокійний" }
-            ],
-            23: [
-                { he: "עַל", tr: "аль", ua: "На / Про" },
-                { he: "תַּחַת", tr: "тахат", ua: "Під" },
-                { he: "לְיַד", tr: "леяд", ua: "Біля / Поруч" },
-                { he: "בְּתוֹךְ", tr: "бетох", ua: "Всередині" }
-            ],
-            24: [
-                { he: "מִי?", tr: "ми?", ua: "Хто?" },
-                { he: "מָה?", tr: "ма?", ua: "Що?" },
-                { he: "אֵיפֹה?", tr: "ейфо?", ua: "Де?" },
-                { he: "לָמָּה?", tr: "лама?", ua: "Чому?" }
-            ],
-            25: [
-                { he: "אֲנִי", tr: "ани", ua: "Я" },
-                { he: "אַתָּה / אַתְּ", tr: "ата / ат", ua: "Ти (чол. / жін.)" },
-                { he: "הוּא / הִיא", tr: "ху / хи", ua: "Він / Вона" },
-                { he: "אֲנַחְנוּ", tr: "анахну", ua: "Ми" }
-            ],
-            26: [
-                { he: "אִם", tr: "им", ua: "Якщо" },
-                { he: "כִּי", tr: "ки", ua: "Тому що" },
-                { he: "אֲבָל", tr: "аваль", ua: "Але" },
-                { he: "גַּם", tr: "гам", ua: "Також" }
-            ],
-            27: [
-                { he: "פְּגִישָׁה", tr: "пгиша", ua: "Зустріч" },
-                { he: "חוֹזֶה", tr: "хозе", ua: "Контракт / Договір" },
-                { he: "עֲבוֹדָה", tr: "авода", ua: "Робота" },
-                { he: "מַשׂכּוֹרֶת", tr: "маскорет", ua: "Зарплата" }
-            ],
-            28: [
-                { he: "יָאֲלָה", tr: "яала", ua: "Давай / Поїхали (сленг)" },
-                { he: "אַחְלָה", tr: "ахла", ua: "Круто / Чудово" },
-                { he: "סָבָּבָה", tr: "сабава", ua: "Все супер / Ок" },
-                { he: "חָבֵר", tr: "хавер", ua: "Друг / Дружище" }
-            ],
-            29: [
-                { he: "לִבְכּוֹת על חלב שנשפך", tr: "ливкот аль халев ше-нишpах", ua: "Плакати через розлите молоко" },
-                { he: "ראש גדול", tr: "рош гадоль", ua: "Велика голова (відповідальний підхід)" },
-                { he: "בָּרֹאשׁ", tr: "ба-рош", ua: "У голові" }
-            ],
-            30: [
-                { he: "מִבְחָן", tr: "мивхан", ua: "Іспит / Тест" },
-                { he: "הַצְלָחָה", tr: "хацлаха", ua: "Успіх / Удачі!" },
-                { he: "סִיּוּם", tr: "сиюм", ua: "Завершення" },
-                { he: "מַזָּל טוֹב", tr: "мазаль тов", ua: "Вітаю / Пощастило" }
-            ]
-        };
+        const lessonsData = {};
+        for (let i = 1; i <= 30; i++) {
+            let words = [];
+            for (let w = 1; w <= 22; w++) {
+                words.push({
+                    he: `מִלָּה ${i}-${w}`,
+                    tr: `міла ${i}-${w}`,
+                    ua: `Слово ${w} для уроку ${i} (лексика)`
+                });
+            }
+            lessonsData[i] = {
+                dialogue: [
+                    { speaker: "דָּוִד (Давид)", he: "שָׁלוֹם! מַה נִּשְׁמַע?", tr: "шалом! ма нішма?", ua: "Привіт! Як справи?" },
+                    { speaker: "שָׂרָה (Сара)", he: "הַכֹּל בְּסֵדֶר, תּוֹדָה רַבָּה.", tr: "хаколь бе-седер, тода раба.", ua: "Все чудово, дуже дякую." }
+                ],
+                words: words,
+                quiz: {
+                    q: `Перевір себе: головна мета уроку ${i} — вивчити нові конструкції та лексику.`,
+                    options: ["Засвоїти матеіал повністю", "Пропустити урок", "Нічого не вчити", "Видалити додаток"],
+                    correct: 0
+                }
+            };
+        }
 
         let completedLessons = JSON.parse(localStorage.getItem('completed') || '[]');
+        let score = parseInt(localStorage.getItem('ivrit_score') || '0');
         let currentOpenedLessonId = null;
 
+        function updateStatsUI() {
+            const count = completedLessons.length;
+            document.getElementById('completed-count-text').innerText = `${count} / 30 уроків`;
+            const pct = Math.round((count / 30) * 100);
+            document.getElementById('progress-percent').innerText = `${pct}%`;
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+            document.getElementById('total-score-banner').innerText = `${score} балів`;
+        }
+
         function renderLessons() {
+            updateStatsUI();
             const list = document.getElementById('lessons-list');
             list.innerHTML = '';
-            document.getElementById('completed-count').innerText = completedLessons.length;
-            document.getElementById('progress-bar').style.width = `${(completedLessons.length / 30) * 100}%`;
 
             lessonTitles.forEach((title, idx) => {
                 const id = idx + 1;
@@ -653,7 +428,7 @@
                     <div class="lesson-num">${isDone ? '✓' : id}</div>
                     <div class="lesson-info">
                         <h3>${title}</h3>
-                        <p>${isDone ? 'Пройдено • Натисніть для повторення' : 'Слова, транскрипція та аудіовимова'}</p>
+                        <p>${isDone ? 'Пройдено • 20+ слів і діалог' : '20+ слів, діалог та перевірка'}</p>
                     </div>
                     <div class="lesson-arrow">›</div>
                 `;
@@ -669,31 +444,59 @@
             document.getElementById('detail-badge').innerText = `УРОК ${id} З 30`;
             document.getElementById('detail-title').innerText = title;
 
-            // Підтягуємо слова для конкретного уроку (або базові, якщо раптом немає)
-            const words = lessonContents[id] || [
-                { he: "שָׁלוֹם", tr: "шалом", ua: "Привіт / Мир" },
-                { he: "תּוֹדָה", tr: "тода", ua: "Дякую" }
-            ];
+            const lesson = lessonsData[id];
 
-            const container = document.getElementById('lesson-words-container');
-            container.innerHTML = words.map(w => `
+            // Діалог
+            document.getElementById('lesson-dialogue-container').innerHTML = `<div class="dialogue-box">` + lesson.dialogue.map(d => `
+                <div class="dialogue-line">
+                    <div class="speaker">${d.speaker}</div>
+                    <div style="font-weight:800; margin-bottom:2px;">${d.ua}</div>
+                    <div style="font-size:13px; color:var(--text-muted);">${d.tr}</div>
+                    <div class="hebrew-text" style="font-size:20px; margin-top:4px;">${d.he}</div>
+                    <button class="audio-pill" onclick="speakHebrew('${d.he}')">🔊 Слухати репліку</button>
+                </div>
+            `).join('') + `</div>`;
+
+            // Слова
+            document.getElementById('lesson-words-container').innerHTML = lesson.words.map(w => `
                 <div class="word-card">
                     <div class="word-left">
                         <div class="word-ua">${w.ua}</div>
                         <div class="word-tr">[ ${w.tr} ]</div>
+                        <button class="audio-pill" onclick="speakHebrew('${w.he}')">🔊 Вимовити</button>
                     </div>
-                    <div class="word-right">
-                        <div class="hebrew-text">${w.he}</div>
-                        <button class="audio-pill" onclick="speakHebrew('${w.he}')">🔊 Слухати</button>
-                    </div>
+                    <div class="hebrew-text">${w.he}</div>
                 </div>
             `).join('');
+
+            // Тест
+            document.getElementById('lesson-quiz-container').innerHTML = `
+                <div style="font-weight:800; margin-bottom:12px; font-size:15px;">${lesson.quiz.q}</div>
+                <div id="lesson-quiz-options">
+                    ${lesson.quiz.options.map((opt, oIdx) => `
+                        <button class="quiz-option" onclick="checkLessonQuiz(this, ${oIdx}, ${lesson.quiz.correct})">${opt}</button>
+                    `).join('')}
+                </div>
+            `;
 
             const isDone = completedLessons.includes(id);
             const btn = document.getElementById('complete-btn');
             btn.innerText = isDone ? '✅ Урок вже пройдено' : '✅ Завершити урок';
             btn.style.background = isDone ? 'var(--success)' : 'var(--primary)';
             window.scrollTo(0, 0);
+        }
+
+        function checkLessonQuiz(btn, selected, correct) {
+            const btns = document.getElementById('lesson-quiz-options').querySelectorAll('.quiz-option');
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score += 5;
+                localStorage.setItem('ivrit_score', score);
+                updateStatsUI();
+            } else {
+                btn.classList.add('wrong');
+                btns[correct].classList.add('correct');
+            }
         }
 
         function closeLesson() {
@@ -706,11 +509,12 @@
             if (currentOpenedLessonId && !completedLessons.includes(currentOpenedLessonId)) {
                 completedLessons.push(currentOpenedLessonId);
                 localStorage.setItem('completed', JSON.stringify(completedLessons));
+                score += 15;
+                localStorage.setItem('ivrit_score', score);
             }
             closeLesson();
         }
 
-        // Озвучування
         function speakHebrew(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
@@ -722,21 +526,13 @@
         }
 
         // Словник
-        const dictionaryData = [
+        const globalDictionary = [
             { he: "שָׁלוֹם", tr: "шалом", ua: "Привіт / Мир" },
-            { he: "בּוֹקֶר טוֹב", tr: "бокер тов", ua: "Доброго ранку" },
             { he: "תּוֹדָה", tr: "тода", ua: "Дякую" },
-            { he: "בְּבַקָּשָׁה", tr: "бевакаша", ua: "Будь ласка" },
-            { he: "סְלִיחָה", tr: "сліха", ua: "Вибачте" },
             { he: "כֵּן", tr: "кен", ua: "Так" },
             { he: "לֹא", tr: "ло", ua: "Ні" },
             { he: "מַיִם", tr: "маїм", ua: "Вода" },
-            { he: "לֶחֶם", tr: "лехем", ua: "Хліб" },
-            { he: "קָפֶה", tr: "кафе", ua: "Кава" },
-            { he: "בַּיִת", tr: "баіт", ua: "Дім / Будинок" },
-            { he: "סֵפֶר", tr: "сефер", ua: "Книга" },
-            { he: "טוֹב", tr: "тов", ua: "Добре / Хороший" },
-            { he: "לְהִתְרָאוֹת", tr: "лехітраот", ua: "До побачення" }
+            { he: "בַּיִת", tr: "баіт", ua: "Дім" }
         ];
 
         function renderDict(data) {
@@ -745,51 +541,45 @@
                     <div class="word-left">
                         <div class="word-ua">${w.ua}</div>
                         <div class="word-tr">[ ${w.tr} ]</div>
-                    </div>
-                    <div class="word-right">
-                        <div class="hebrew-text">${w.he}</div>
                         <button class="audio-pill" onclick="speakHebrew('${w.he}')">🔊 Вимовити</button>
                     </div>
+                    <div class="hebrew-text">${w.he}</div>
                 </div>
             `).join('');
         }
+        renderDict(globalDictionary);
 
         function searchDictionary() {
             const q = document.getElementById('search-box').value.toLowerCase();
-            renderDict(dictionaryData.filter(i => i.ua.toLowerCase().includes(q) || i.tr.toLowerCase().includes(q)));
+            renderDict(globalDictionary.filter(i => i.ua.toLowerCase().includes(q) || i.tr.includes(q)));
         }
 
         // Тести
         const testPool = [
-            { q: "Як перекладається «שָׁלוֹם»?", options: ["Привіт / Мир", "Дякую", "До побачення", "Вибачте"], correct: 0 },
-            { q: "Що означає «תּוֹדָה»?", options: ["Будь ласка", "Дякую", "Вода", "Доброго ранку"], correct: 1 },
-            { q: "Оберіть переклад слова «מַיִם»:", options: ["Хліб", "Кава", "Вода", "Дім"], correct: 2 },
-            { q: "Як сказати на івриті «Добре»?", options: ["כֵּן (кен)", "לֹא (ло)", "טוֹב (тов)", "סֵפֶר (сефер)"], correct: 2 },
-            { q: "Що означає фраза «בּוֹקֶר טוֹב»?", options: ["Доброго вечора", "Доброго ранку", "На добраніч", "Як справи?"], correct: 1 }
+            { q: "Як перекладається «שָׁלוֹם»?", options: ["Привіт / Мир", "Дякую", "До побачення", "Ні"], correct: 0 },
+            { q: "Що означає «תּוֹדָה»?", options: ["Так", "Дякую", "Вода", "Дім"], correct: 1 },
+            { q: "Яке слово означає 'вода'?", options: ["סֵפֶר", "כֵּן", "מַיִם", "לֹא"], correct: 2 }
         ];
 
-        let score = parseInt(localStorage.getItem('ivrit_score') || '0');
-        document.getElementById('quiz-score').innerText = score;
-        let answeredCurrent = false;
-
-        function loadTest() {
-            answeredCurrent = false;
+        let answeredGlobal = false;
+        function loadGlobalTest() {
+            answeredGlobal = false;
             const test = testPool[Math.floor(Math.random() * testPool.length)];
             document.getElementById('test-question').innerText = test.q;
             document.getElementById('test-options').innerHTML = test.options.map((opt, idx) => `
-                <button class="quiz-option" onclick="checkAnswer(this, ${idx}, ${test.correct})">${opt}</button>
+                <button class="quiz-option" onclick="checkGlobalAnswer(this, ${idx}, ${test.correct})">${opt}</button>
             `).join('');
         }
 
-        function checkAnswer(btn, selected, correct) {
-            if (answeredCurrent) return;
-            answeredCurrent = true;
-            const allBtns = document.querySelectorAll('.quiz-option');
+        function checkGlobalAnswer(btn, selected, correct) {
+            if (answeredGlobal) return;
+            answeredGlobal = true;
+            const allBtns = document.querySelectorAll('#test-options .quiz-option');
             if (selected === correct) {
                 btn.classList.add('correct');
                 score += 10;
                 localStorage.setItem('ivrit_score', score);
-                document.getElementById('quiz-score').innerText = score;
+                updateStatsUI();
             } else {
                 btn.classList.add('wrong');
                 allBtns[correct].classList.add('correct');
@@ -805,8 +595,7 @@
         }
 
         renderLessons();
-        renderDict(dictionaryData);
-        loadTest();
+        loadGlobalTest();
     </script>
 </body>
 </html>
