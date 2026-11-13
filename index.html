@@ -1,1 +1,354 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17365d">
+<title>IVRIT PRO — Иврит с нуля</title>
 
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f3f6fb;
+ color:#243247;
+}
+
+header{
+ background:#17365d;
+ color:white;
+ padding:25px 18px;
+ text-align:center;
+}
+
+header h1{
+ margin:0;
+ font-size:28px;
+ letter-spacing:2px;
+}
+
+header p{
+ margin:9px 0 0;
+ color:#dce8f7;
+}
+
+nav{
+ display:flex;
+ overflow-x:auto;
+ background:white;
+ padding:10px;
+ gap:8px;
+ position:sticky;
+ top:0;
+ z-index:10;
+}
+
+nav button{
+ border:0;
+ background:#edf2f8;
+ padding:12px 15px;
+ border-radius:9px;
+ white-space:nowrap;
+ color:#17365d;
+ font-weight:bold;
+}
+
+main{
+ padding:15px;
+ max-width:700px;
+ margin:auto;
+}
+
+.card{
+ background:white;
+ padding:18px;
+ border-radius:14px;
+ margin-bottom:14px;
+ box-shadow:0 3px 12px #00000009;
+}
+
+h2{color:#17365d}
+
+h3{color:#31577f}
+
+.progress{
+ height:12px;
+ background:#e4eaf2;
+ border-radius:10px;
+ overflow:hidden;
+}
+
+.progress div{
+ height:100%;
+ width:0;
+ background:#21a68b;
+ transition:.3s;
+}
+
+.lesson{
+ border:1px solid #e2e9f2;
+ padding:15px;
+ border-radius:12px;
+ margin:10px 0;
+ cursor:pointer;
+}
+
+.lesson:active{background:#edf5ff}
+
+.hebrew{
+ direction:rtl;
+ text-align:right;
+ font-size:25px;
+ color:#17365d;
+ font-weight:bold;
+ margin:12px 0;
+}
+
+.trans{
+ color:#16816e;
+ font-size:16px;
+}
+
+.translation{
+ color:#555;
+ margin:5px 0;
+}
+
+button.action{
+ background:#17365d;
+ color:white;
+ border:0;
+ padding:13px 18px;
+ border-radius:9px;
+ font-size:15px;
+ margin:5px 3px;
+}
+
+button.answer{
+ display:block;
+ width:100%;
+ background:#edf2f8;
+ color:#243247;
+ border:1px solid #dce4ef;
+ padding:14px;
+ margin:9px 0;
+ border-radius:9px;
+ text-align:left;
+ font-size:16px;
+}
+
+button.answer:active{
+ background:#dceaff;
+}
+
+.result{
+ padding:12px;
+ margin-top:12px;
+ border-radius:9px;
+ background:#e9f7f1;
+}
+
+.hidden{display:none}
+
+.small{color:#777;font-size:13px}
+
+footer{
+ text-align:center;
+ padding:25px;
+ color:#8290a2;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>IVRIT PRO</h1>
+<p>Изучай иврит. Понимай. Читай. Говори.</p>
+</header>
+
+<nav>
+<button onclick="showPage('home')">Главная</button>
+<button onclick="showPage('course')">Уроки</button>
+<button onclick="showPage('dictionary')">Словарь</button>
+<button onclick="showPage('progress')">Мой прогресс</button>
+</nav>
+
+<main>
+
+<section id="home">
+
+<div class="card">
+<h2>שלום! Шалом!</h2>
+<p>Добро пожаловать в IVRIT PRO!</p>
+<p>Твой персональный курс изучения иврита.</p>
+
+<h3>Мой прогресс</h3>
+<div class="progress">
+<div id="bar"></div>
+</div>
+<p id="progressText">Пройдено уроков: 0 из 20</p>
+
+<button class="action" onclick="openLesson(0)">
+Начать обучение
+</button>
+</div>
+
+<div class="card">
+<h3>Что ты изучишь?</h3>
+<p>✓ Чтение и письмо на иврите</p>
+<p>✓ Разговорный иврит</p>
+<p>✓ Грамматику и глаголы</p>
+<p>✓ Общение в реальных ситуациях</p>
+<p>✓ Аренду жилья и поиск работы</p>
+</div>
+
+</section>
+
+<section id="course" class="hidden">
+<div class="card">
+<h2>Учебная программа</h2>
+<p>20 последовательных уроков.</p>
+<div id="lessons"></div>
+</div>
+</section>
+
+<section id="lessonPage" class="hidden">
+<div class="card">
+<button class="action" onclick="showPage('course')">
+← К урокам
+</button>
+<div id="lessonContent"></div>
+</div>
+</section>
+
+<section id="dictionary" class="hidden">
+<div class="card">
+<h2>Мой словарь</h2>
+<p>Основные слова первого урока.</p>
+<div id="words"></div>
+</div>
+</section>
+
+<section id="progress" class="hidden">
+<div class="card">
+<h2>Мои достижения</h2>
+<h3 id="completed">Пройдено уроков: 0</h3>
+<h3 id="points">Набрано баллов: 0</h3>
+<p>Продолжай обучение каждый день!</p>
+</div>
+</section>
+
+</main>
+
+<footer>
+IVRIT PRO © 2026
+<br>
+Изучаем иврит шаг за шагом
+</footer>
+
+<script>
+
+const topics=[
+"Алфавит и произношение",
+"Учимся читать на иврите",
+"Приветствия и знакомство",
+"Личные местоимения и род",
+"Числа, возраст и телефон",
+"Моя семья",
+"Мой дом и квартира",
+"Мой повседневный день",
+"Время и расписание",
+"Еда и ресторан",
+"Магазин и покупки",
+"Город и ориентирование",
+"Транспорт и поездки",
+"Работа и профессии",
+"Прошедшее время",
+"Будущее время",
+"Здоровье и врач",
+"Телефонные разговоры",
+"Аренда жилья",
+"Практический иврит. Итоговый экзамен"
+];
+
+const vocabulary=[
+["שלום","шалом","Привет, здравствуйте"],
+["תודה","тода","Спасибо"],
+["בבקשה","бэвакаша","Пожалуйста"],
+["כן","кен","Да"],
+["לא","ло","Нет"],
+["בוקר טוב","бокер тов","Доброе утро"],
+["ערב טוב","эрев тов","Добрый вечер"],
+["לילה טוב","лайла тов","Спокойной ночи"],
+["סליחה","слиха","Извините"],
+["להתראות","леhитраот","До свидания"]
+];
+
+let completed=JSON.parse(localStorage.getItem("completed")||"[]");
+let points=Number(localStorage.getItem("points")||0);
+
+function save(){
+ localStorage.setItem("completed",JSON.stringify(completed));
+ localStorage.setItem("points",points);
+ updateProgress();
+}
+
+function updateProgress(){
+ document.getElementById("bar").style.width=
+ (completed.length/20*100)+"%";
+
+ document.getElementById("progressText").innerText=
+ "Пройдено уроков: "+completed.length+" из 20";
+
+ document.getElementById("completed").innerText=
+ "Пройдено уроков: "+completed.length;
+
+ document.getElementById("points").innerText=
+ "Набрано баллов: "+points;
+}
+
+function showPage(id){
+ document.querySelectorAll("main section").forEach(s=>
+ s.classList.add("hidden"));
+
+ document.getElementById(id).classList.remove("hidden");
+
+ if(id==="progress")updateProgress();
+}
+
+function renderLessons(){
+ let html="";
+ topics.forEach((t,i)=>{
+ html+=`
+ <div class="lesson" onclick="openLesson(${i})">
+ <b>Урок ${i+1}</b>
+ <p>${t}</p>
+ <span class="small">
+ ${completed.includes(i)?"✓ Пройден":"Открыть урок"}
+ </span>
+ </div>`;
+ });
+ document.getElementById("lessons").innerHTML=html;
+}
+
+function speak(text){
+ if(!("speechSynthesis" in window)){
+ alert("Озвучивание не поддерживается браузером");
+ return;
+ }
+ speechSynthesis.cancel();
+ let u=new SpeechSynthesisUtterance(text);
+ u.lang="he-IL";
+ u.rate=0.8;
+ speechSynthesis.speak(u);
+}
+
+function openLesson(n){
+ showPage("lessonPage");
+
+ if(n!==0){
+ document.getElementById("lessonContent").innerHTML=`
+ <h2>Урок ${n+1}. ${topics[n]}</h2>
