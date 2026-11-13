@@ -336,7 +336,17 @@ function renderLessons(){
  });
  document.getElementById("lessons").innerHTML=html;
 }
-
+```html
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(() => console.log('IVRIT PRO готов'))
+      .catch(error => console.log(error));
+  });
+}
+</script>
+```
 function speak(text){
  if(!("speechSynthesis" in window)){
  alert("Озвучивание не поддерживается браузером");
