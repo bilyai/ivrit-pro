@@ -57,7 +57,7 @@
         .screen { display: none; }
         .screen.active { display: block; }
 
-        .header-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .header-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         
         .lesson-item {
             background: var(--card);
@@ -69,7 +69,6 @@
             align-items: center;
             gap: 14px;
             cursor: pointer;
-            transition: 0.1s;
         }
         .lesson-item:active { transform: scale(0.98); }
         .lesson-num {
@@ -121,6 +120,10 @@
             width: 100%; background: var(--primary); color: white; border: none;
             padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px;
         }
+        .quiz-opt {
+            background: var(--card); color: var(--text); border: 1px solid var(--border);
+            text-align: left; padding: 12px; border-radius: 8px; margin-top: 8px; width: 100%; font-size: 14px; cursor: pointer;
+        }
 
         nav {
             position: fixed; bottom: 0; left: 0; right: 0; background: var(--card);
@@ -148,7 +151,7 @@
         <!-- ЕКРАН 1: УРОКИ -->
         <div id="screen-lessons" class="screen active">
             <div id="lessons-home">
-                <div class="header-title">Програма курсу (30 уроків)</div>
+                <div class="header-title">Список уроків курсу</div>
                 <div id="lessons-list"></div>
             </div>
 
@@ -177,6 +180,12 @@
                     <div id="det-words"></div>
                 </div>
 
+                <!-- Тест конкретно для цього уроку -->
+                <div class="section-box" style="border-color: var(--primary);">
+                    <div class="section-title">🎯 Перевірка знань по темі уроку</div>
+                    <div id="lesson-quiz"></div>
+                </div>
+
                 <button class="btn-main" id="done-btn" onclick="markDone()">✅ Позначити урок пройденим</button>
                 <button class="btn-main" style="background:var(--card); color:var(--text); border:1px solid var(--border);" onclick="closeLesson()">Назад до списку</button>
             </div>
@@ -189,14 +198,14 @@
             <div id="dict-list"></div>
         </div>
 
-        <!-- ЕКРАН 3: ТЕСТИ -->
+        <!-- ЕКРАН 3: ЗАГАЛЬНІ ТЕСТИ -->
         <div id="screen-tests" class="screen">
-            <div class="header-title">Перевірка знань</div>
+            <div class="header-title">Експрес-тренування</div>
             <div class="section-box">
-                <div id="test-q" style="font-weight: 600; margin-bottom: 12px; font-size: 15px;"></div>
-                <div id="test-opts"></div>
+                <div id="global-test-q" style="font-weight: 600; margin-bottom: 12px; font-size: 15px;"></div>
+                <div id="global-test-opts"></div>
             </div>
-            <button class="btn-main" onclick="loadTest()">Наступне питання</button>
+            <button class="btn-main" onclick="loadGlobalTest()">Наступне питання</button>
         </div>
     </div>
 
@@ -230,14 +239,20 @@
             "Питальні слова", "Займенники та належність", "Складні речення", "Підсумковий іспит курсу"
         ];
 
-        // Детальна база даних з унікальними теоріями, діалогами та лексикою
         const lessons = {};
         for (let i = 1; i <= 30; i++) {
-            let theoryText = `Вивчення теми уроку №${i}. Загальні правила побудови речень та лексичний мінімум для щоденного спілкування.`;
+            let theoryText = `Вивчення теми уроку №${i}. Загальні правила побудови речень та лексичний мінімум.`;
             let diag = [
                 { sp: "Давид", he: `שָׁלוֹם! מַה נִּשְׁמַע בְּנוֹשֵׂא ${i}?`, tr: `шалом! ма нішма бе-носе ${i}?`, ua: `Привіт! Як справи по темі ${i}?` },
                 { sp: "Сара", he: `הַכֹּל מְצוּיָן, אֲנִי לוֹמֶדֶת.`, tr: `хаколь мецуян, ани ломедет.`, ua: `Все чудово, я вчуся.` }
             ];
+            let quiz = {
+                questionUa: `Як перекладається ключовий вираз поточного уроку №${i}?`,
+                questionHeb: `מַה הַמַּשְׁמָעוּת שֶׁל שִׁעוּר ${i}?`,
+                questionTr: `ма ха-мишмаут шел шиур ${i}?`,
+                opts: ["Правильна відповідь по темі уроку", "Зовсім інша тема", "Випадкове слово"],
+                correct: 0
+            };
 
             if(i === 4) {
                 theoryText = "<b>Інфінітив (початкова форма дієслова):</b> В івриті більшість інфінітивів у будінні «пааль» починаються з префікса <b>לְـ (ле-)</b> або <b>לַـ (ла-)</b>. Наприклад: <i>лихтов</i> (писати), <i>ликро</i> (читати).";
@@ -245,32 +260,61 @@
                     { sp: "Давид", he: "מַה אַתָּה רוֹצֶה לַעֲשׂוֹת הַיּוֹם?", tr: `ма ата роце лаасот хайом?`, ua: `Що ти хочеш робити сьогодні?` },
                     { sp: "Сара", he: "אֲנִי רוֹצֶה לִכְתּוֹב מִכְתָּב וְלִקְרֹא סֵפֶר.", tr: `ани роце лихтов михтав ве-ликро сефер.`, ua: `Я хочу написати листа і почитати книгу.` }
                 ];
+                quiz = {
+                    questionUa: "З якого префікса зазвичай починається інфінітив (початкова форма дієслова) в івриті?",
+                    questionHeb: "מֵאֵיזֶה תַּחְדִּית מַתְחִיל לְרֹב שֵׁם הַפּוֹעַל בְּעִבְרִית?",
+                    questionTr: "ме-ейзе тахдит матхил ле-ров шем ха-поаль бе-іврит?",
+                    opts: ["לְـ (ле-)", "מִـ (ми-)", "בְּـ (бе-)"],
+                    correct: 0
+                };
             } else if(i === 5) {
-                theoryText = "<b>Теперішній час:</b> В івриті теперішній час змінюється лише за чотирма формами (однина ч.р., однина ж.р., множина ч.р., множина ж.р.). У багатьох дієсловах звучання схоже на причастя (напр., <i>овед</i> — працюючий / працюю).";
+                theoryText = "<b>Теперішній час:</b> В івриті теперішній час змінюється лише за чотирма формами (однина ч.р., однина ж.р., множина ч.р., множина ж.р.).";
                 diag = [
                     { sp: "Давид", he: "אֵיפֹה אַתָּה עוֹבֵד עַכְשָׁו?", tr: `ейфо ата овед ахшав?`, ua: `Де ти зараз працюєш?` },
-                    { sp: "Сара", he: "אֲנִי עוֹבֵד בְּתֵל אָבִיב וְלוֹמֵד עִבְרִית.", tr: `ани овед бе-тель авив ве-ломед иврит.`, ua: `Я працюю в Тель-Авіві і вчу іврит.` }
+                    { sp: "Сара", he: "אֲנִי עוֹבֵד בְּתֵל אָבִיב וְלוֹמֶד עִבְרִית.", tr: `ани овед бе-тель авив ве-ломед иврит.`, ua: `Я працюю в Тель-Авіві і вчу іврит.` }
                 ];
+                quiz = {
+                    questionUa: "Скільки форм має теперішній час дієслів в івриті?",
+                    questionUrs: "Скільки форм має теперішній час?",
+                    questionHeb: "כַּמָּה צוּרוֹת יֵשׁ לְזְמַן הוֹוֶה בְּעִבְרִית?",
+                    questionTr: "кама цурот еш ле-зман хове бе-іврит?",
+                    opts: ["4 форми (однина/множина ч.р. та ж.р.)", "12 форм", "Тільки 1 форма"],
+                    correct: 0
+                };
             } else if(i === 6) {
-                theoryText = "<b>Минулий час:</b> У минулому часі дієслово змінюється за особами (я, ти, він, вона тощо) за допомогою закінчень. Наприклад, корінь <i>п-ע-ל</i> у минулому часі для «я» матиме закінчення <i>-ти</i> (<i>паалти</i>).";
+                theoryText = "<b>Минулий час:</b> У минулому часі дієслово змінюється за особами за допомогою закінчень (наприклад, закінчення <i>-ти</i> для займенника «я»).";
                 diag = [
                     { sp: "Давид", he: "מָתַי בָּאתָ הַבַּיְתָה אֶתְמוֹל?", tr: `матай бата хабайта этмоль?`, ua: `Коли ти прийшов додому вчора?` },
                     { sp: "Сара", he: "בָּאתִי בְּשָׁעָה שֶׁבַע וְאָכַלְתִּי אֲרוּחַת עֶרֶב.", tr: `бати бе-шаа шева ве-ахальти арухат ерев.` , ua: `Я прийшов о сьомій і повечеряв.` }
                 ];
+                quiz = {
+                    questionUa: "Яке закінчення додається в минулому часі для займенника 'я'?",
+                    questionHeb: "אֵיזֶה סִיּוּם נוֹסֵף בֶּעָבָר לַגּוּף 'אֲנִי'?",
+                    questionTr: "ейзе сиюм носеф бе-авар ла-гуф 'ани'?",
+                    opts: ["-ти (תִּי- / ־תִּי)", "-а (ה-)", "-ну (נוּ-)"],
+                    correct: 0
+                };
             } else if(i === 7) {
-                theoryText = "<b>Майбутній час:</b> Майбутній час утворюється додаванням спеціальних префіксів перед коренем залежно від особи (наприклад, префікс <i>א-</i> (э-) для займенника «я», <i>ת-</i> (т-) для «ти» та «вона»).";
+                theoryText = "<b>Майбутній час:</b> Майбутній час утворюється додаванням спеціальних префіксів перед коренем залежно від особи.";
                 diag = [
                     { sp: "Давид", he: "מָה תַּעֲשֶׂה מָחָר בַּבֹּקֶר?", tr: `ма таасе махар ба-бокер?`, ua: `Що ти зробиш завтра вранці?` },
                     { sp: "Сара", he: "אֲנִי אֶסֹּעַ לַיָּם וְאֶשְׁתֶּה קָפֶה.", tr: `ани эсоа ла-ям ве-эште кафе.`, ua: `Я поїду на море і вип'ю каву.` }
                 ];
+                quiz = {
+                    questionUa: "Як утворюється майбутній час в івриті?",
+                    questionHeb: "הִנֵּה אֵיךְ נוֹצָר זְמַן עָתִיד בְּעִבְרִית?",
+                    questionTr: "хине ейх ноцар зман атид бе-іврит?",
+                    opts: ["За допомогою префіксів на початку", "За допомогою суфіксів у кінці", "Зміною наголосу"],
+                    correct: 0
+                };
             }
 
             let words = [];
-            for(let w = 1; w <= 12; w++) {
+            for(let w = 1; w <= 10; w++) {
                 words.push({
                     he: `מִלָּה ${i}-${w}`,
-                    tr: `транскрипція сл. ${i}-${w}`,
-                    ua: `Переклад терміна ${w} (тема ${i})`
+                    tr: `транскрипція ${i}-${w}`,
+                    ua: `Слово ${w} (тема ${i})`
                 });
             }
 
@@ -278,7 +322,8 @@
                 title: titles[i-1],
                 theory: theoryText,
                 dialogue: diag,
-                words: words
+                words: words,
+                quiz: quiz
             };
         }
 
@@ -295,7 +340,7 @@
                         <div class="lesson-num">${isDone ? '✓' : id}</div>
                         <div class="lesson-info">
                             <h3>${t}</h3>
-                            <p>${isDone ? 'Пройдено' : 'Теорія, діалог, лексика'}</p>
+                            <p>${isDone ? 'Пройдено' : 'Теорія, діалог, тест'}</p>
                         </div>
                     </div>
                 `;
@@ -310,7 +355,7 @@
             document.getElementById('det-title').innerText = l.title;
             document.getElementById('det-theory').innerHTML = l.theory;
 
-            // Діалог з укр. транскрипцією
+            // Діалог
             document.getElementById('det-dialogue').innerHTML = l.dialogue.map(d => `
                 <div style="margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
                     <div style="font-size: 11px; font-weight: 700; color: var(--primary);">${d.sp}:</div>
@@ -335,8 +380,34 @@
                 </div>
             `).join('');
 
+            // Тест конкретно для цього уроку з івритом та транскрипцією
+            const qz = l.quiz;
+            document.getElementById('lesson-quiz').innerHTML = `
+                <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">${qz.questionUa}</div>
+                <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 2px;">Читання: [ ${qz.questionTr} ]</div>
+                <div class="hebrew-word" style="font-size: 22px; margin-bottom: 10px;">${qz.questionHeb}</div>
+                <div>
+                    ${qz.opts.map((opt, oIdx) => `
+                        <button class="quiz-opt" onclick="checkLessonAns(this, ${oIdx}, ${qz.correct})">${opt}</button>
+                    `).join('')}
+                </div>
+            `;
+
             window.currentId = id;
             window.scrollTo(0, 0);
+        }
+
+        function checkLessonAns(btn, sel, cor) {
+            const parent = btn.parentElement;
+            const allBtns = parent.querySelectorAll('.quiz-opt');
+            allBtns.forEach(b => b.style.borderColor = 'var(--border)');
+            if(sel === cor) {
+                btn.style.borderColor = 'var(--success)';
+                btn.style.background = 'rgba(22, 163, 74, 0.15)';
+            } else {
+                btn.style.borderColor = 'var(--error)';
+                btn.style.background = 'rgba(220, 38, 38, 0.15)';
+            }
         }
 
         function closeLesson() {
@@ -362,12 +433,10 @@
             }
         }
 
-        // Словник
         const dictData = [
             { he: "שָׁלוֹם", tr: "шалом", ua: "привіт / мир" },
             { he: "תּוֹדָה", tr: "тода", ua: "дякую" },
-            { he: "לִכְתּוֹב", tr: "лихтов", ua: "писати (інфінітив)" },
-            { he: "עוֹבֵד", tr: "овед", ua: "працюю / працюючий (теп. час)" }
+            { he: "לִכְתּוֹב", tr: "лихтов", ua: "писати (інфінітив)" }
         ];
 
         function renderDict(data) {
@@ -391,27 +460,33 @@
             renderDict(dictData.filter(i => i.ua.toLowerCase().includes(q)));
         }
 
-        // Тести
-        const tests = [
-            { q: "З якого префікса зазвичай починається інфінітив в івриті?", opts: ["לְـ (ле-)", "מִـ (ми-)", "בְּـ (бе-)"], correct: 0 },
-            { q: "Скільки форм має теперішній час в івриті?", opts: ["4 форми (однина/множина ч.р. та ж.р.)", "12 форм як у англійській", "Тільки 1 форму"], correct: 0 }
+        const globalTests = [
+            { ua: "Як перекладається «שָׁלוֹם»?", tr: "шалом", he: "שָׁלוֹם", opts: ["Привіт / Мир", "Дякую", "Пока"], cor: 0 },
+            { ua: "Що означає слово «תּוֹדָה»?", tr: "тода", he: "תּוֹדָה", opts: ["Будь ласка", "Дякую", "Так"], cor: 1 }
         ];
 
-        function loadTest() {
-            const t = tests[Math.floor(Math.random() * tests.length)];
-            document.getElementById('test-q').innerText = t.q;
-            document.getElementById('test-opts').innerHTML = t.opts.map((o, idx) => `
-                <button class="btn-main" style="background:var(--card); color:var(--text); border:1px solid var(--border); margin-top:6px; text-align:left;" onclick="checkAns(this, ${idx}, ${t.correct})">${o}</button>
+        function loadGlobalTest() {
+            const t = globalTests[Math.floor(Math.random() * globalTests.length)];
+            document.getElementById('global-test-q').innerHTML = `
+                <div>${t.ua}</div>
+                <div style="font-size:12px; color:var(--text-muted);">[ ${t.tr} ]</div>
+                <div class="hebrew-word" style="font-size:20px; margin-top:4px;">${t.he}</div>
+            `;
+            document.getElementById('global-test-opts').innerHTML = t.opts.map((o, idx) => `
+                <button class="quiz-opt" onclick="checkGlobalAns(this, ${idx}, ${t.cor})">${o}</button>
             `).join('');
         }
 
-        function checkAns(btn, sel, cor) {
+        function checkGlobalAns(btn, sel, cor) {
+            const parent = btn.parentElement;
+            const allBtns = parent.querySelectorAll('.quiz-opt');
+            allBtns.forEach(b => b.style.borderColor = 'var(--border)');
             if(sel === cor) {
-                btn.style.background = "rgba(22, 163, 74, 0.2)";
-                btn.style.color = "var(--success)";
+                btn.style.borderColor = 'var(--success)';
+                btn.style.background = 'rgba(22, 163, 74, 0.15)';
             } else {
-                btn.style.background = "rgba(220, 38, 38, 0.2)";
-                btn.style.color = "var(--error)";
+                btn.style.borderColor = 'var(--error)';
+                btn.style.background = 'rgba(220, 38, 38, 0.15)';
             }
         }
 
@@ -424,7 +499,7 @@
         }
 
         renderLessons();
-        loadTest();
+        loadGlobalTest();
     </script>
 </body>
 </html>
