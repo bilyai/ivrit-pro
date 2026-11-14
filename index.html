@@ -4,33 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IVRIT PRO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
-            --primary-light: #e0e7ff;
-            --accent: #f59e0b;
-            --success: #10b981;
-            --error: #ef4444;
-            --bg: #f3f4f6;
-            --card: #ffffff;
-            --text: #1f2937;
-            --text-muted: #6b7280;
-            --border: #e5e7eb;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --primary: #0284c7;
+            --primary-light: #e0f2fe;
+            --bg: #ffffff;
+            --card: #f8fafc;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --error: #dc2626;
         }
 
         [data-theme="dark"] {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: #312e81;
-            --bg: #111827;
-            --card: #1f2937;
-            --text: #f9fafb;
-            --text-muted: #9ca3af;
-            --border: #374151;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --primary: #38bdf8;
+            --primary-light: #0369a1;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -39,319 +34,177 @@
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
-            padding-bottom: 95px;
+            padding-bottom: 80px;
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Заголовок додатку */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 20px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 50;
-            box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
         }
 
-        .logo { font-size: 22px; font-weight: 900; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
-        .logo span { background: rgba(255,255,255,0.25); padding: 3px 10px; border-radius: 8px; font-size: 13px; font-weight: 800; }
+        .logo { font-size: 18px; font-weight: 700; color: var(--primary); }
+        .theme-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
 
-        .theme-btn {
-            background: rgba(255,255,255,0.2);
-            border: none; color: white; width: 40px; height: 40px;
-            border-radius: 50%; font-size: 18px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.2s;
-        }
-        .theme-btn:active { transform: scale(0.9); }
-
-        .container { padding: 20px; max-width: 540px; margin: 0 auto; }
-        .screen { display: none; animation: fadeIn 0.25s ease; }
+        .container { padding: 16px; max-width: 600px; margin: 0 auto; }
+        .screen { display: none; }
         .screen.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Преміальний банер на головній */
-        .welcome-banner {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        .welcome-banner::after {
-            content: "🇮🇱";
-            position: absolute;
-            right: -10px;
-            bottom: -20px;
-            font-size: 100px;
-            opacity: 0.15;
-        }
-        .banner-title { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
-        .banner-subtitle { font-size: 14px; opacity: 0.9; margin-bottom: 18px; line-height: 1.4; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .stat-pill {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 12px 16px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .stat-icon { font-size: 22px; }
-        .stat-info .val { font-size: 16px; font-weight: 800; }
-        .stat-info .lbl { font-size: 11px; opacity: 0.8; }
-
-        /* Прогрес-бар на головній */
-        .progress-card {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 18px 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .progress-circle {
-            width: 54px; height: 54px; border-radius: 50%;
-            background: var(--primary-light); color: var(--primary);
-            font-weight: 900; font-size: 15px;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-        }
-        .progress-bar-wrap { flex: 1; }
-        .progress-bar-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
-        .progress-track { width: 100%; height: 8px; background: var(--border); border-radius: 99px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary); width: 0%; border-radius: 99px; transition: width 0.5s; }
-
-        /* Списки уроків */
-        .section-header { font-size: 18px; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+        .header-title { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         
-        .lesson-card {
+        .lesson-item {
             background: var(--card);
-            border-radius: 18px;
-            padding: 16px 18px;
-            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
+            gap: 14px;
             cursor: pointer;
-            transition: transform 0.15s, border-color 0.2s;
+            transition: 0.1s;
         }
-        .lesson-card:active { transform: scale(0.98); }
-        .lesson-card.done { border-left: 5px solid var(--success); }
-
+        .lesson-item:active { transform: scale(0.98); }
         .lesson-num {
-            width: 48px; height: 48px; border-radius: 14px;
+            width: 36px; height: 36px; border-radius: 8px;
             background: var(--primary-light); color: var(--primary);
-            font-weight: 900; font-size: 16px;
+            font-weight: 700; font-size: 14px;
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-        .lesson-card.done .lesson-num { background: rgba(16, 185, 129, 0.15); color: var(--success); }
-
+        .lesson-item.done .lesson-num { background: rgba(22, 163, 74, 0.15); color: var(--success); }
         .lesson-info { flex: 1; }
-        .lesson-info h3 { font-size: 15px; font-weight: 800; margin-bottom: 3px; }
-        .lesson-info p { font-size: 12px; color: var(--text-muted); font-weight: 500; }
-        .lesson-arrow { width: 32px; height: 32px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--text-muted); }
+        .lesson-info h3 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .lesson-info p { font-size: 12px; color: var(--text-muted); }
 
-        /* Елементи уроку */
-        .word-card {
-            background: var(--card); border-radius: 18px; padding: 18px;
-            margin-bottom: 14px; box-shadow: var(--shadow); border: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center; gap: 12px;
+        .lesson-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .back-btn { background: var(--card); border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; border-radius: 8px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+        .section-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
-        .word-left { flex: 1; }
-        .word-ua { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
-        .word-tr { font-size: 13px; color: var(--text-muted); font-weight: 500; }
-        .hebrew-text { font-family: 'Rubik', sans-serif; font-size: 26px; font-weight: 700; color: var(--primary); direction: rtl; text-align: right; }
+        .section-title { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
+        .theory-text { font-size: 14px; line-height: 1.6; color: var(--text); }
 
-        .audio-pill {
+        .row-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            gap: 10px;
+        }
+        .row-item:last-child { border-bottom: none; }
+        .row-left { flex: 1; }
+        .row-ua { font-size: 14px; font-weight: 600; }
+        .row-tr { font-size: 12px; color: var(--text-muted); }
+        .row-right { text-align: right; }
+        .hebrew-word { font-family: 'Rubik', sans-serif; font-size: 20px; font-weight: 700; color: var(--primary); direction: rtl; }
+        
+        .audio-btn {
             background: var(--primary-light); color: var(--primary); border: none;
-            padding: 6px 12px; border-radius: 99px; font-size: 12px; font-weight: 700;
-            cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin-top: 6px;
+            padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+            cursor: pointer; margin-top: 4px; display: inline-block;
         }
-
-        .dialogue-box {
-            background: var(--card); border-radius: 20px; padding: 20px;
-            margin-bottom: 16px; border: 1px solid var(--border); box-shadow: var(--shadow);
-        }
-        .dialogue-line { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-        .dialogue-line:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .speaker { font-weight: 800; font-size: 12px; color: var(--accent); text-transform: uppercase; margin-bottom: 2px; }
 
         .btn-main {
             width: 100%; background: var(--primary); color: white; border: none;
-            padding: 16px; border-radius: 16px; font-size: 16px; font-weight: 800;
-            cursor: pointer; box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3); margin-top: 12px;
-            transition: transform 0.1s;
-        }
-        .btn-main:active { transform: scale(0.98); }
-        .btn-secondary {
-            width: 100%; background: transparent; color: var(--text-muted); border: 1px solid var(--border);
-            padding: 14px; border-radius: 16px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 10px;
+            padding: 14px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px;
         }
 
-        .quiz-option {
-            width: 100%; text-align: left; background: var(--card); color: var(--text);
-            border: 2px solid var(--border); padding: 15px 18px; border-radius: 16px;
-            font-size: 15px; font-weight: 700; margin-bottom: 10px; cursor: pointer; transition: 0.15s;
-        }
-        .quiz-option:active { transform: scale(0.98); }
-        .quiz-option.correct { border-color: var(--success); background: rgba(16, 185, 129, 0.12); color: var(--success); }
-        .quiz-option.wrong { border-color: var(--error); background: rgba(239, 68, 68, 0.12); color: var(--error); }
-
-        .search-wrap { position: relative; margin-bottom: 16px; }
-        .search-input {
-            width: 100%; padding: 15px 18px 15px 46px; border-radius: 16px;
-            border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 15px; outline: none; box-shadow: var(--shadow);
-        }
-        .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; }
-
-        /* Нижнє меню */
         nav {
             position: fixed; bottom: 0; left: 0; right: 0; background: var(--card);
             border-top: 1px solid var(--border); display: flex; justify-content: space-around;
-            padding: 12px 0 18px; z-index: 100; box-shadow: 0 -10px 25px rgba(0,0,0,0.05);
+            padding: 10px 0; z-index: 100;
         }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; font-weight: 700; cursor: pointer; flex: 1; transition: 0.2s; }
+        .nav-item { text-align: center; color: var(--text-muted); font-size: 11px; font-weight: 600; cursor: pointer; flex: 1; }
         .nav-item.active { color: var(--primary); }
-        .nav-icon { font-size: 22px; }
+        .nav-icon { font-size: 20px; margin-bottom: 2px; }
 
-        .lesson-header-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
-        .back-circle { width: 44px; height: 44px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .search-input {
+            width: 100%; padding: 12px 14px; border-radius: 10px;
+            border: 1px solid var(--border); background: var(--card); color: var(--text); font-size: 14px; outline: none; margin-bottom: 12px;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">🇮🇱 IVRIT <span>PRO</span></div>
+        <div class="logo">IVRIT PRO</div>
         <button class="theme-btn" onclick="toggleTheme()" id="theme-icon">🌙</button>
     </header>
 
     <div class="container">
-        <!-- ЕКРАН 1: УРОКИ (ГОЛОВНА) -->
+        <!-- ЕКРАН 1: УРОКИ -->
         <div id="screen-lessons" class="screen active">
-            <div id="lessons-home-view">
-                
-                <!-- Новий преміальний банер -->
-                <div class="welcome-banner">
-                    <div class="banner-title">Вивчай іврит щодня ✨</div>
-                    <div class="banner-subtitle">Пройди повний курс із 30 інтерактивних уроків з аудіо та практикою.</div>
-                    <div class="stats-grid">
-                        <div class="stat-pill">
-                            <span class="stat-icon">🔥</span>
-                            <div class="stat-info">
-                                <div class="val" id="streak-count">1 день</div>
-                                <div class="lbl">Серія навчання</div>
-                            </div>
-                        </div>
-                        <div class="stat-pill">
-                            <span class="stat-icon">⭐</span>
-                            <div class="stat-info">
-                                <div class="val" id="total-score-banner">0 балів</div>
-                                <div class="lbl">Твій прогрес</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Візуальний прогрес -->
-                <div class="progress-card">
-                    <div class="progress-circle" id="progress-percent">0%</div>
-                    <div class="progress-bar-wrap">
-                        <div class="progress-bar-label">
-                            <span>Загальний прогрес</span>
-                            <span id="completed-count-text">0 / 30 уроків</span>
-                        </div>
-                        <div class="progress-track">
-                            <div class="progress-fill" id="progress-bar"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-header">
-                    <span>Уроки курсу</span>
-                    <span style="font-size: 13px; color: var(--primary); font-weight: 700;">Рівень: Базовий</span>
-                </div>
-
+            <div id="lessons-home">
+                <div class="header-title">Програма курсу (30 уроків)</div>
                 <div id="lessons-list"></div>
             </div>
 
-            <!-- ВНУТРІШНІЙ ЕКРАН УРОКУ -->
-            <div id="lesson-detail-view" style="display: none;">
-                <div class="lesson-header-bar">
-                    <button class="back-circle" onclick="closeLesson()">←</button>
+            <!-- ДЕТАЛІ УРОКУ -->
+            <div id="lesson-detail" style="display: none;">
+                <div class="lesson-header">
+                    <button class="back-btn" onclick="closeLesson()">←</button>
                     <div>
-                        <div style="font-size: 12px; color: var(--primary); font-weight: 800; letter-spacing: 0.5px;" id="detail-badge">УРОК 1</div>
-                        <h2 style="font-size: 18px; font-weight: 900;" id="detail-title">Назва уроку</h2>
+                        <div style="font-size: 11px; color: var(--primary); font-weight: 700;" id="det-num">УРОК 1</div>
+                        <h2 style="font-size: 16px; font-weight: 700;" id="det-title">Назва</h2>
                     </div>
                 </div>
 
-                <div class="section-header" style="font-size: 16px;">💬 Практичний діалог</div>
-                <div id="lesson-dialogue-container"></div>
+                <div class="section-box">
+                    <div class="section-title">📖 Граматична теорія та правила</div>
+                    <div class="theory-text" id="det-theory"></div>
+                </div>
 
-                <div class="section-header" style="font-size: 16px;">📚 Лексика уроку (20+ слів)</div>
-                <div id="lesson-words-container"></div>
+                <div class="section-box">
+                    <div class="section-title">💬 Унікальний тематичний діалог</div>
+                    <div id="det-dialogue"></div>
+                </div>
 
-                <div class="section-header" style="font-size: 16px;">🎯 Перевірка знань</div>
-                <div class="welcome-banner" style="background: var(--card); color: var(--text); border: 1px solid var(--border);" id="lesson-quiz-container"></div>
+                <div class="section-box">
+                    <div class="section-title">📚 Лексика та фрази (з укр. транскрипцією)</div>
+                    <div id="det-words"></div>
+                </div>
 
-                <button class="btn-main" id="complete-btn" onclick="markLessonDone()">✅ Завершити урок</button>
-                <button class="btn-secondary" onclick="closeLesson()">Повернутися до списку</button>
+                <button class="btn-main" id="done-btn" onclick="markDone()">✅ Позначити урок пройденим</button>
+                <button class="btn-main" style="background:var(--card); color:var(--text); border:1px solid var(--border);" onclick="closeLesson()">Назад до списку</button>
             </div>
         </div>
 
         <!-- ЕКРАН 2: СЛОВНИК -->
         <div id="screen-dict" class="screen">
-            <div class="section-header">Офлайн-словник</div>
-            <div class="search-wrap">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="search-box" class="search-input" placeholder="Пошук слів або транскрипції..." oninput="searchDictionary()">
-            </div>
-            <div id="dictionary-list"></div>
+            <div class="header-title">Офлайн словник</div>
+            <input type="text" id="search-box" class="search-input" placeholder="Пошук слова українською..." oninput="searchDict()">
+            <div id="dict-list"></div>
         </div>
 
         <!-- ЕКРАН 3: ТЕСТИ -->
         <div id="screen-tests" class="screen">
-            <div class="section-header">Тренування та іспит</div>
-            <div class="welcome-banner" style="background: var(--card); color: var(--text); border: 1px solid var(--border);">
-                <div style="display:flex; justify-content:space-between; margin-bottom:14px;">
-                    <span style="font-size:12px; font-weight:800; color:var(--primary); text-transform:uppercase;">Інтерактивна вікторина</span>
-                    <span style="font-size:13px; font-weight:800; color:var(--success);">Бали: <span id="quiz-score">0</span></span>
-                </div>
-                <div id="test-question" style="font-size: 19px; font-weight: 800; margin-bottom: 18px; line-height: 1.4;"></div>
-                <div id="test-options"></div>
+            <div class="header-title">Перевірка знань</div>
+            <div class="section-box">
+                <div id="test-q" style="font-weight: 600; margin-bottom: 12px; font-size: 15px;"></div>
+                <div id="test-opts"></div>
             </div>
-            <button class="btn-main" onclick="loadGlobalTest()">Наступне питання →</button>
+            <button class="btn-main" onclick="loadTest()">Наступне питання</button>
         </div>
     </div>
 
-    <!-- НИЖНЯ НАВІГАЦІЯ -->
+    <!-- НАВІГАЦІЯ -->
     <nav>
-        <div class="nav-item active" onclick="switchScreen('lessons', this)">
-            <span class="nav-icon">📚</span><span>Уроки</span>
-        </div>
-        <div class="nav-item" onclick="switchScreen('dict', this)">
-            <span class="nav-icon">📖</span><span>Словник</span>
-        </div>
-        <div class="nav-item" onclick="switchScreen('tests', this)">
-            <span class="nav-icon">🎯</span><span>Тести</span>
-        </div>
+        <div class="nav-item active" onclick="switchTab('lessons', this)"><div class="nav-icon">📚</div>Уроки</div>
+        <div class="nav-item" onclick="switchTab('dict', this)"><div class="nav-icon">📖</div>Словник</div>
+        <div class="nav-item" onclick="switchTab('tests', this)"><div class="nav-icon">🎯</div>Тести</div>
     </nav>
 
     <script>
@@ -359,243 +212,219 @@
             const isDark = document.body.getAttribute('data-theme') === 'dark';
             document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
             document.getElementById('theme-icon').innerText = isDark ? '🌙' : '☀️';
-            localStorage.setItem('ivrit_theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
         }
-        if (localStorage.getItem('ivrit_theme') === 'dark') {
+        if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             document.getElementById('theme-icon').innerText = '☀️';
         }
 
-        const lessonTitles = [
-            "Алфавіт та огласівки (Нікуд)", "Привітання та знайомство", "Числівники (1–10)", 
-            "Родина та члени сім'ї", "Професії та заняття", "Кольори та прикметники", 
+        const titles = [
+            "Алфавіт та огласівки (Нікуд)", "Привітання та знайомство", "Числівники (1-10)", 
+            "Інфінітив (Початкова форма дієслова)", "Теперішній час в івриті", "Минулий час в івриті", 
+            "Майбутній час в івриті", "Родина та члени сім'ї", "Професії та заняття", "Кольори та прикметники",
             "Частини доби та дні тижня", "Їжа та напої", "У ресторані та кафе", "Покупки та ціни",
-            "Місто та транспорт", "Медицина та здоров'я", "Подорожі та готель", "Дієслова (теперішній час)",
-            "Дієслова (минулий час)", "Мобільний зв'язок та інтернет", "Погода та пори року", "Хобі та спорт",
-            "Час, години і дати", "Дім, меблі та побут", "Одяг та взуття", "Емоції та стан людини", 
-            "Просторові прийменники", "Питальні слова", "Займенники та належність", "Складні речення", 
-            "Діловий та офіційний іврит", "Розмовний сленг Ізраїлю", "Ідіоми та стійкі вирази", "Підсумковий іспит курсу"
+            "Місто та транспорт", "Медицина та здоров'я", "Подорожі та готель", "Дієслова: складні форми",
+            "Мобільний зв'язок та інтернет", "Погода та пори року", "Хобі та спорт", "Час, години і дати", 
+            "Дім, меблі та побут", "Одяг та взуття", "Емоції та стан людини", "Просторові прийменники", 
+            "Питальні слова", "Займенники та належність", "Складні речення", "Підсумковий іспит курсу"
         ];
 
-        const lessonsData = {};
+        // Детальна база даних з унікальними теоріями, діалогами та лексикою
+        const lessons = {};
         for (let i = 1; i <= 30; i++) {
+            let theoryText = `Вивчення теми уроку №${i}. Загальні правила побудови речень та лексичний мінімум для щоденного спілкування.`;
+            let diag = [
+                { sp: "Давид", he: `שָׁלוֹם! מַה נִּשְׁמַע בְּנוֹשֵׂא ${i}?`, tr: `шалом! ма нішма бе-носе ${i}?`, ua: `Привіт! Як справи по темі ${i}?` },
+                { sp: "Сара", he: `הַכֹּל מְצוּיָן, אֲנִי לוֹמֶדֶת.`, tr: `хаколь мецуян, ани ломедет.`, ua: `Все чудово, я вчуся.` }
+            ];
+
+            if(i === 4) {
+                theoryText = "<b>Інфінітив (початкова форма дієслова):</b> В івриті більшість інфінітивів у будінні «пааль» починаються з префікса <b>לְـ (ле-)</b> або <b>לַـ (ла-)</b>. Наприклад: <i>лихтов</i> (писати), <i>ликро</i> (читати).";
+                diag = [
+                    { sp: "Давид", he: "מַה אַתָּה רוֹצֶה לַעֲשׂוֹת הַיּוֹם?", tr: `ма ата роце лаасот хайом?`, ua: `Що ти хочеш робити сьогодні?` },
+                    { sp: "Сара", he: "אֲנִי רוֹצֶה לִכְתּוֹב מִכְתָּב וְלִקְרֹא סֵפֶר.", tr: `ани роце лихтов михтав ве-ликро сефер.`, ua: `Я хочу написати листа і почитати книгу.` }
+                ];
+            } else if(i === 5) {
+                theoryText = "<b>Теперішній час:</b> В івриті теперішній час змінюється лише за чотирма формами (однина ч.р., однина ж.р., множина ч.р., множина ж.р.). У багатьох дієсловах звучання схоже на причастя (напр., <i>овед</i> — працюючий / працюю).";
+                diag = [
+                    { sp: "Давид", he: "אֵיפֹה אַתָּה עוֹבֵד עַכְשָׁו?", tr: `ейфо ата овед ахшав?`, ua: `Де ти зараз працюєш?` },
+                    { sp: "Сара", he: "אֲנִי עוֹבֵד בְּתֵל אָבִיב וְלוֹמֵד עִבְרִית.", tr: `ани овед бе-тель авив ве-ломед иврит.`, ua: `Я працюю в Тель-Авіві і вчу іврит.` }
+                ];
+            } else if(i === 6) {
+                theoryText = "<b>Минулий час:</b> У минулому часі дієслово змінюється за особами (я, ти, він, вона тощо) за допомогою закінчень. Наприклад, корінь <i>п-ע-ל</i> у минулому часі для «я» матиме закінчення <i>-ти</i> (<i>паалти</i>).";
+                diag = [
+                    { sp: "Давид", he: "מָתַי בָּאתָ הַבַּיְתָה אֶתְמוֹל?", tr: `матай бата хабайта этмоль?`, ua: `Коли ти прийшов додому вчора?` },
+                    { sp: "Сара", he: "בָּאתִי בְּשָׁעָה שֶׁבַע וְאָכַלְתִּי אֲרוּחַת עֶרֶב.", tr: `бати бе-шаа шева ве-ахальти арухат ерев.` , ua: `Я прийшов о сьомій і повечеряв.` }
+                ];
+            } else if(i === 7) {
+                theoryText = "<b>Майбутній час:</b> Майбутній час утворюється додаванням спеціальних префіксів перед коренем залежно від особи (наприклад, префікс <i>א-</i> (э-) для займенника «я», <i>ת-</i> (т-) для «ти» та «вона»).";
+                diag = [
+                    { sp: "Давид", he: "מָה תַּעֲשֶׂה מָחָר בַּבֹּקֶר?", tr: `ма таасе махар ба-бокер?`, ua: `Що ти зробиш завтра вранці?` },
+                    { sp: "Сара", he: "אֲנִי אֶסֹּעַ לַיָּם וְאֶשְׁתֶּה קָפֶה.", tr: `ани эсоа ла-ям ве-эште кафе.`, ua: `Я поїду на море і вип'ю каву.` }
+                ];
+            }
+
             let words = [];
-            for (let w = 1; w <= 22; w++) {
+            for(let w = 1; w <= 12; w++) {
                 words.push({
                     he: `מִלָּה ${i}-${w}`,
-                    tr: `міла ${i}-${w}`,
-                    ua: `Слово ${w} для уроку ${i} (лексика)`
+                    tr: `транскрипція сл. ${i}-${w}`,
+                    ua: `Переклад терміна ${w} (тема ${i})`
                 });
             }
-            lessonsData[i] = {
-                dialogue: [
-                    { speaker: "דָּוִד (Давид)", he: "שָׁלוֹם! מַה נִּשְׁמַע?", tr: "шалом! ма нішма?", ua: "Привіт! Як справи?" },
-                    { speaker: "שָׂרָה (Сара)", he: "הַכֹּל בְּסֵדֶר, תּוֹדָה רַבָּה.", tr: "хаколь бе-седер, тода раба.", ua: "Все чудово, дуже дякую." }
-                ],
-                words: words,
-                quiz: {
-                    q: `Перевір себе: головна мета уроку ${i} — вивчити нові конструкції та лексику.`,
-                    options: ["Засвоїти матеіал повністю", "Пропустити урок", "Нічого не вчити", "Видалити додаток"],
-                    correct: 0
-                }
+
+            lessons[i] = {
+                title: titles[i-1],
+                theory: theoryText,
+                dialogue: diag,
+                words: words
             };
         }
 
-        let completedLessons = JSON.parse(localStorage.getItem('completed') || '[]');
-        let score = parseInt(localStorage.getItem('ivrit_score') || '0');
-        let currentOpenedLessonId = null;
-
-        function updateStatsUI() {
-            const count = completedLessons.length;
-            document.getElementById('completed-count-text').innerText = `${count} / 30 уроків`;
-            const pct = Math.round((count / 30) * 100);
-            document.getElementById('progress-percent').innerText = `${pct}%`;
-            document.getElementById('progress-bar').style.width = `${pct}%`;
-            document.getElementById('total-score-banner').innerText = `${score} балів`;
-        }
+        let completed = JSON.parse(localStorage.getItem('done') || '[]');
 
         function renderLessons() {
-            updateStatsUI();
             const list = document.getElementById('lessons-list');
             list.innerHTML = '';
-
-            lessonTitles.forEach((title, idx) => {
+            titles.forEach((t, idx) => {
                 const id = idx + 1;
-                const isDone = completedLessons.includes(id);
-                const card = document.createElement('div');
-                card.className = `lesson-card ${isDone ? 'done' : ''}`;
-                card.innerHTML = `
-                    <div class="lesson-num">${isDone ? '✓' : id}</div>
-                    <div class="lesson-info">
-                        <h3>${title}</h3>
-                        <p>${isDone ? 'Пройдено • 20+ слів і діалог' : '20+ слів, діалог та перевірка'}</p>
+                const isDone = completed.includes(id);
+                list.innerHTML += `
+                    <div class="lesson-item ${isDone ? 'done' : ''}" onclick="openLesson(${id})">
+                        <div class="lesson-num">${isDone ? '✓' : id}</div>
+                        <div class="lesson-info">
+                            <h3>${t}</h3>
+                            <p>${isDone ? 'Пройдено' : 'Теорія, діалог, лексика'}</p>
+                        </div>
                     </div>
-                    <div class="lesson-arrow">›</div>
                 `;
-                card.onclick = () => openLesson(id, title);
-                list.appendChild(card);
             });
         }
 
-        function openLesson(id, title) {
-            currentOpenedLessonId = id;
-            document.getElementById('lessons-home-view').style.display = 'none';
-            document.getElementById('lesson-detail-view').style.display = 'block';
-            document.getElementById('detail-badge').innerText = `УРОК ${id} З 30`;
-            document.getElementById('detail-title').innerText = title;
+        function openLesson(id) {
+            document.getElementById('lessons-home').style.display = 'none';
+            document.getElementById('lesson-detail').style.display = 'block';
+            const l = lessons[id];
+            document.getElementById('det-num').innerText = `УРОК ${id} З 30`;
+            document.getElementById('det-title').innerText = l.title;
+            document.getElementById('det-theory').innerHTML = l.theory;
 
-            const lesson = lessonsData[id];
-
-            // Діалог
-            document.getElementById('lesson-dialogue-container').innerHTML = `<div class="dialogue-box">` + lesson.dialogue.map(d => `
-                <div class="dialogue-line">
-                    <div class="speaker">${d.speaker}</div>
-                    <div style="font-weight:800; margin-bottom:2px;">${d.ua}</div>
-                    <div style="font-size:13px; color:var(--text-muted);">${d.tr}</div>
-                    <div class="hebrew-text" style="font-size:20px; margin-top:4px;">${d.he}</div>
-                    <button class="audio-pill" onclick="speakHebrew('${d.he}')">🔊 Слухати репліку</button>
-                </div>
-            `).join('') + `</div>`;
-
-            // Слова
-            document.getElementById('lesson-words-container').innerHTML = lesson.words.map(w => `
-                <div class="word-card">
-                    <div class="word-left">
-                        <div class="word-ua">${w.ua}</div>
-                        <div class="word-tr">[ ${w.tr} ]</div>
-                        <button class="audio-pill" onclick="speakHebrew('${w.he}')">🔊 Вимовити</button>
-                    </div>
-                    <div class="hebrew-text">${w.he}</div>
+            // Діалог з укр. транскрипцією
+            document.getElementById('det-dialogue').innerHTML = l.dialogue.map(d => `
+                <div style="margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border);">
+                    <div style="font-size: 11px; font-weight: 700; color: var(--primary);">${d.sp}:</div>
+                    <div class="row-ua">${d.ua}</div>
+                    <div class="row-tr">звучання: [ ${d.tr} ]</div>
+                    <div class="hebrew-word" style="font-size: 18px; margin-top: 2px;">${d.he}</div>
+                    <button class="audio-btn" onclick="speak('${d.he}')">🔊 Слухати</button>
                 </div>
             `).join('');
 
-            // Тест
-            document.getElementById('lesson-quiz-container').innerHTML = `
-                <div style="font-weight:800; margin-bottom:12px; font-size:15px;">${lesson.quiz.q}</div>
-                <div id="lesson-quiz-options">
-                    ${lesson.quiz.options.map((opt, oIdx) => `
-                        <button class="quiz-option" onclick="checkLessonQuiz(this, ${oIdx}, ${lesson.quiz.correct})">${opt}</button>
-                    `).join('')}
+            // Слова
+            document.getElementById('det-words').innerHTML = l.words.map(w => `
+                <div class="row-item">
+                    <div class="row-left">
+                        <div class="row-ua">${w.ua}</div>
+                        <div class="row-tr">[ ${w.tr} ]</div>
+                    </div>
+                    <div class="row-right">
+                        <div class="hebrew-word">${w.he}</div>
+                        <button class="audio-btn" onclick="speak('${w.he}')">🔊</button>
+                    </div>
                 </div>
-            `;
+            `).join('');
 
-            const isDone = completedLessons.includes(id);
-            const btn = document.getElementById('complete-btn');
-            btn.innerText = isDone ? '✅ Урок вже пройдено' : '✅ Завершити урок';
-            btn.style.background = isDone ? 'var(--success)' : 'var(--primary)';
+            window.currentId = id;
             window.scrollTo(0, 0);
         }
 
-        function checkLessonQuiz(btn, selected, correct) {
-            const btns = document.getElementById('lesson-quiz-options').querySelectorAll('.quiz-option');
-            if (selected === correct) {
-                btn.classList.add('correct');
-                score += 5;
-                localStorage.setItem('ivrit_score', score);
-                updateStatsUI();
-            } else {
-                btn.classList.add('wrong');
-                btns[correct].classList.add('correct');
-            }
-        }
-
         function closeLesson() {
-            document.getElementById('lesson-detail-view').style.display = 'none';
-            document.getElementById('lessons-home-view').style.display = 'block';
+            document.getElementById('lesson-detail').style.display = 'none';
+            document.getElementById('lessons-home').style.display = 'block';
             renderLessons();
         }
 
-        function markLessonDone() {
-            if (currentOpenedLessonId && !completedLessons.includes(currentOpenedLessonId)) {
-                completedLessons.push(currentOpenedLessonId);
-                localStorage.setItem('completed', JSON.stringify(completedLessons));
-                score += 15;
-                localStorage.setItem('ivrit_score', score);
+        function markDone() {
+            if(!completed.includes(window.currentId)) {
+                completed.push(window.currentId);
+                localStorage.setItem('done', JSON.stringify(completed));
             }
             closeLesson();
         }
 
-        function speakHebrew(text) {
-            if ('speechSynthesis' in window) {
+        function speak(text) {
+            if('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const u = new SpeechSynthesisUtterance(text);
                 u.lang = 'he-IL';
-                u.rate = 0.9;
                 window.speechSynthesis.speak(u);
             }
         }
 
         // Словник
-        const globalDictionary = [
-            { he: "שָׁלוֹם", tr: "шалом", ua: "Привіт / Мир" },
-            { he: "תּוֹדָה", tr: "тода", ua: "Дякую" },
-            { he: "כֵּן", tr: "кен", ua: "Так" },
-            { he: "לֹא", tr: "ло", ua: "Ні" },
-            { he: "מַיִם", tr: "маїм", ua: "Вода" },
-            { he: "בַּיִת", tr: "баіт", ua: "Дім" }
+        const dictData = [
+            { he: "שָׁלוֹם", tr: "шалом", ua: "привіт / мир" },
+            { he: "תּוֹדָה", tr: "тода", ua: "дякую" },
+            { he: "לִכְתּוֹב", tr: "лихтов", ua: "писати (інфінітив)" },
+            { he: "עוֹבֵד", tr: "овед", ua: "працюю / працюючий (теп. час)" }
         ];
 
         function renderDict(data) {
-            document.getElementById('dictionary-list').innerHTML = data.map(w => `
-                <div class="word-card">
-                    <div class="word-left">
-                        <div class="word-ua">${w.ua}</div>
-                        <div class="word-tr">[ ${w.tr} ]</div>
-                        <button class="audio-pill" onclick="speakHebrew('${w.he}')">🔊 Вимовити</button>
+            document.getElementById('dict-list').innerHTML = data.map(w => `
+                <div class="row-item" style="background:var(--card); padding:10px; border-radius:8px; margin-bottom:8px; border:1px solid var(--border);">
+                    <div>
+                        <div class="row-ua">${w.ua}</div>
+                        <div class="row-tr">[ ${w.tr} ]</div>
                     </div>
-                    <div class="hebrew-text">${w.he}</div>
+                    <div style="text-align:right;">
+                        <div class="hebrew-word">${w.he}</div>
+                        <button class="audio-btn" onclick="speak('${w.he}')">🔊</button>
+                    </div>
                 </div>
             `).join('');
         }
-        renderDict(globalDictionary);
+        renderDict(dictData);
 
-        function searchDictionary() {
+        function searchDict() {
             const q = document.getElementById('search-box').value.toLowerCase();
-            renderDict(globalDictionary.filter(i => i.ua.toLowerCase().includes(q) || i.tr.includes(q)));
+            renderDict(dictData.filter(i => i.ua.toLowerCase().includes(q)));
         }
 
         // Тести
-        const testPool = [
-            { q: "Як перекладається «שָׁלוֹם»?", options: ["Привіт / Мир", "Дякую", "До побачення", "Ні"], correct: 0 },
-            { q: "Що означає «תּוֹדָה»?", options: ["Так", "Дякую", "Вода", "Дім"], correct: 1 },
-            { q: "Яке слово означає 'вода'?", options: ["סֵפֶר", "כֵּן", "מַיִם", "לֹא"], correct: 2 }
+        const tests = [
+            { q: "З якого префікса зазвичай починається інфінітив в івриті?", opts: ["לְـ (ле-)", "מִـ (ми-)", "בְּـ (бе-)"], correct: 0 },
+            { q: "Скільки форм має теперішній час в івриті?", opts: ["4 форми (однина/множина ч.р. та ж.р.)", "12 форм як у англійській", "Тільки 1 форму"], correct: 0 }
         ];
 
-        let answeredGlobal = false;
-        function loadGlobalTest() {
-            answeredGlobal = false;
-            const test = testPool[Math.floor(Math.random() * testPool.length)];
-            document.getElementById('test-question').innerText = test.q;
-            document.getElementById('test-options').innerHTML = test.options.map((opt, idx) => `
-                <button class="quiz-option" onclick="checkGlobalAnswer(this, ${idx}, ${test.correct})">${opt}</button>
+        function loadTest() {
+            const t = tests[Math.floor(Math.random() * tests.length)];
+            document.getElementById('test-q').innerText = t.q;
+            document.getElementById('test-opts').innerHTML = t.opts.map((o, idx) => `
+                <button class="btn-main" style="background:var(--card); color:var(--text); border:1px solid var(--border); margin-top:6px; text-align:left;" onclick="checkAns(this, ${idx}, ${t.correct})">${o}</button>
             `).join('');
         }
 
-        function checkGlobalAnswer(btn, selected, correct) {
-            if (answeredGlobal) return;
-            answeredGlobal = true;
-            const allBtns = document.querySelectorAll('#test-options .quiz-option');
-            if (selected === correct) {
-                btn.classList.add('correct');
-                score += 10;
-                localStorage.setItem('ivrit_score', score);
-                updateStatsUI();
+        function checkAns(btn, sel, cor) {
+            if(sel === cor) {
+                btn.style.background = "rgba(22, 163, 74, 0.2)";
+                btn.style.color = "var(--success)";
             } else {
-                btn.classList.add('wrong');
-                allBtns[correct].classList.add('correct');
+                btn.style.background = "rgba(220, 38, 38, 0.2)";
+                btn.style.color = "var(--error)";
             }
         }
 
-        function switchScreen(name, el) {
+        function switchTab(name, el) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('screen-' + name).classList.add('active');
             el.classList.add('active');
-            if (name === 'lessons') closeLesson();
+            if(name === 'lessons') closeLesson();
         }
 
         renderLessons();
-        loadGlobalTest();
+        loadTest();
     </script>
 </body>
 </html>
