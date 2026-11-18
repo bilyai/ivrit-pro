@@ -1,540 +1,120 @@
 <!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IVRIT PRO — Єврейська академія івриту</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --jewish-blue: #0038b8;
-            --jewish-dark-blue: #001c63;
-            --jewish-gold: #c69214;
-            --jewish-light-gold: #e6c25b;
-            --bg-pergamum: #fbf5e8;
-            --card-bg: #fffdf9;
-            --border-tan: #dec7a1;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Assistant', sans-serif;
-            background-color: var(--bg-pergamum);
-            background-image: 
-                radial-gradient(rgba(198, 146, 20, 0.12) 1px, transparent 1px),
-                radial-gradient(rgba(0, 56, 184, 0.06) 1px, var(--bg-pergamum) 1px);
-            background-size: 24px 24px;
-            background-position: 0 0, 12px 12px;
-            color: #24292f;
-            line-height: 1.6;
-            padding-bottom: 50px;
-        }
-
-        header {
-            background: linear-gradient(160deg, var(--jewish-dark-blue) 0%, var(--jewish-blue) 60%, #0047e0 100%);
-            color: white;
-            text-align: center;
-            padding: 25px 20px 35px;
-            position: relative;
-            border-bottom: 6px solid var(--jewish-gold);
-            box-shadow: 0 8px 25px rgba(0, 28, 99, 0.35);
-            overflow: hidden;
-        }
-
-        header::before {
-            content: "";
-            display: block;
-            height: 6px;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--jewish-gold),
-                var(--jewish-gold) 20px,
-                transparent 20px,
-                transparent 28px
-            );
-            margin-bottom: 18px;
-            opacity: 0.85;
-        }
-
-        .jewish-emblems {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 18px;
-            font-size: 28px;
-            color: var(--jewish-light-gold);
-            margin-bottom: 8px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-        }
-
-        header h1 {
-            font-size: 2.3rem;
-            letter-spacing: 3px;
-            font-weight: 800;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        header p {
-            margin-top: 6px;
-            font-size: 1.1rem;
-            color: #f3e8c8;
-            letter-spacing: 0.5px;
-        }
-
-        .hebrew-motto {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 1.25rem;
-            color: var(--jewish-light-gold);
-            margin-top: 8px;
-            letter-spacing: 1px;
-        }
-
-        .container {
-            max-width: 820px;
-            margin: 30px auto;
-            padding: 0 15px;
-        }
-
-        .lesson-card {
-            background: var(--card-bg);
-            border: 2px solid var(--jewish-gold);
-            outline: 4px solid var(--card-bg);
-            box-shadow: 0 0 0 5px rgba(198, 146, 20, 0.35), 0 8px 20px rgba(0, 56, 184, 0.08);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 28px;
-            position: relative;
-        }
-
-        .lesson-card::after {
-            content: "✡";
-            position: absolute;
-            top: 16px;
-            right: 20px;
-            color: var(--jewish-blue);
-            font-size: 26px;
-            opacity: 0.85;
-        }
-
-        .lesson-card h2 {
-            color: var(--jewish-blue);
-            font-size: 1.35rem;
-            margin-bottom: 6px;
-            padding-right: 35px;
-            font-weight: 700;
-        }
-
-        .hebrew-title {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 1.45rem;
-            color: var(--jewish-gold);
-            font-weight: 700;
-            direction: rtl;
-            text-align: right;
-            margin-bottom: 12px;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--jewish-blue), var(--jewish-dark-blue));
-            color: white;
-            border: 1px solid var(--jewish-gold);
-            padding: 11px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-family: 'Assistant', sans-serif;
-            font-weight: 700;
-            display: inline-block;
-            margin-top: 12px;
-            box-shadow: 0 4px 10px rgba(0, 56, 184, 0.25);
-            text-decoration: none;
-        }
-
-        .btn:active { transform: scale(0.98); }
-
-        .btn-gold {
-            background: linear-gradient(135deg, #d6a11e, #b07f0c);
-            color: #fff;
-            border: none;
-        }
-
-        .audio-btn {
-            background: #eef3ff;
-            border: 1.5px solid var(--jewish-blue);
-            color: var(--jewish-blue);
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-size: 16px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .audio-btn:hover, .audio-btn:active {
-            background: var(--jewish-blue);
-            color: white;
-            transform: scale(1.08);
-        }
-
-        .lesson-content-box {
-            background: var(--card-bg);
-            border: 2px solid var(--jewish-gold);
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 25px;
-            box-shadow: 0 6px 20px rgba(198, 146, 20, 0.15);
-        }
-
-        /* Блок цитати на уроці */
-        .lesson-quote-box {
-            background: #fdf8ee;
-            border: 1.5px solid var(--jewish-gold);
-            border-radius: 10px;
-            padding: 16px;
-            margin: 18px 0 22px 0;
-            box-shadow: inset 0 1px 4px rgba(198, 146, 20, 0.1);
-        }
-
-        .ornament-divider {
-            text-align: center;
-            color: var(--jewish-gold);
-            font-size: 1.2rem;
-            letter-spacing: 8px;
-            margin: 22px 0 10px;
-        }
-
-        .section-title {
-            color: var(--jewish-blue);
-            border-bottom: 2px solid var(--jewish-gold);
-            padding-bottom: 8px;
-            margin-top: 15px;
-            margin-bottom: 16px;
-            font-size: 1.3rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .theory-p {
-            margin-bottom: 12px;
-            padding: 10px 14px;
-            background: #faf4e6;
-            border-left: 4px solid var(--jewish-blue);
-            border-radius: 0 8px 8px 0;
-            font-size: 1.05rem;
-        }
-
-        .dialogue-box {
-            background: #fdf9f0;
-            padding: 14px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            border: 1px solid var(--border-tan);
-            border-right: 5px solid var(--jewish-gold);
-        }
-
-        .dialogue-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .he-dialogue {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--jewish-blue);
-            direction: rtl;
-            text-align: right;
-            flex-grow: 1;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 12px;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border-tan);
-        }
-
-        th, td {
-            border: 1px solid var(--border-tan);
-            padding: 10px 10px;
-            text-align: left;
-            vertical-align: middle;
-        }
-
-        th {
-            background-color: var(--jewish-blue);
-            color: white;
-            font-size: 1rem;
-        }
-
-        td.he-col {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-weight: 700;
-            color: var(--jewish-blue);
-            direction: rtl;
-            text-align: right;
-            font-size: 1.3rem;
-        }
-
-        .quiz-item {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed var(--border-tan);
-        }
-
-        .quiz-opt {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 11px 15px;
-            margin: 8px 0;
-            border: 1.5px solid var(--border-tan);
-            border-radius: 8px;
-            background: #fff;
-            cursor: pointer;
-            font-family: 'Assistant', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .quiz-opt.correct { background: #d4edda; border-color: #28a745; color: #155724; }
-        .quiz-opt.wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
-
-        footer {
-            text-align: center;
-            color: #7d6b4f;
-            margin-top: 40px;
-            font-size: 0.95rem;
-            padding: 20px;
-            border-top: 2px solid var(--border-tan);
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="jewish-emblems">
-            <span>✡</span>
-            <span>✡</span>
-            <span>✡</span>
-        </div>
-        <h1>IVRIT PRO</h1>
-        <p>Єврейський академічний курс івриту</p>
-        <div class="hebrew-motto">בְּהַצְלָחָה בַּלִּימּוּדִים • Успіхів у навчанні</div>
-    </header>
-
-    <div class="container" id="app-container"></div>
-
-    <footer>
-        <div>✡ ✡ ✡</div>
-        <p style="margin-top: 6px;">&copy; 2026 IVRIT PRO. Усі права захищено.</p>
-    </footer>
-
-    <script src="lessons-data.js"></script>
-    <script>
-        const container = document.getElementById("app-container");
-
-        function speakHebrew(text) {
-            if (!('speechSynthesis' in window)) {
-                alert("Ваш браузер не підтримує голосове озвучення.");
-                return;
-            }
-            window.speechSynthesis.cancel();
-            const cleanText = text.replace(/['"«»]/g, "");
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.lang = 'he-IL';
-            utterance.rate = 0.85;
-            
-            const voices = window.speechSynthesis.getVoices();
-            const hebrewVoice = voices.find(v => v.lang.includes('he') || v.lang.includes('iw'));
-            if (hebrewVoice) {
-                utterance.voice = hebrewVoice;
-            }
-            window.speechSynthesis.speak(utterance);
-        }
-
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-        }
-
-        function escapeQuotes(str) {
-            return (str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-        }
-
-        function renderList() {
-            if (typeof ivritCourses === "undefined" || !Array.isArray(ivritCourses)) {
-                container.innerHTML = `<div style="text-align:center; color:red; padding:20px;">Помилка: не вдалося знайти файл <code>lessons-data.js</code>.</div>`;
-                return;
-            }
-
-            let html = "";
-            ivritCourses.forEach(lesson => {
-                let desc = (lesson.theory && lesson.theory[0]) ? lesson.theory[0] : "Інтерактивний урок івриту.";
-                html += `
-                    <div class="lesson-card">
-                        <h2>${lesson.title}</h2>
-                        <div class="hebrew-title">${lesson.hebrewTitle || ''}</div>
-                        <p style="color: #444; font-size: 1.05rem;">${desc}</p>
-                        <button class="btn" onclick="openLesson(${lesson.id})">Відкрити урок ✡</button>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-            window.scrollTo(0, 0);
-        }
-
-        function openLesson(id) {
-            const lesson = ivritCourses.find(l => l.id === id);
-            if (!lesson) return;
-
-            let theoryHtml = (lesson.theory || []).map(t => `<div class="theory-p">${t}</div>`).join("");
-            
-            // Якщо у файлі уроку задана цитата — виводимо її красивим блоком
-            let quoteHtml = "";
-            if (lesson.quote) {
-                quoteHtml = `
-                    <div class="lesson-quote-box">
-                        <div style="font-size: 0.85rem; color: #8c7b60; margin-bottom: 6px; font-weight: 700; text-transform: uppercase;">💡 Мудрість єврейського народу</div>
-                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-                            <button class="audio-btn" title="Прослухати" onclick="speakHebrew('${escapeQuotes(lesson.quote.he)}')">🔊</button>
-                            <div class="he-dialogue" style="font-size: 1.35rem;">${lesson.quote.he}</div>
-                        </div>
-                        <div style="font-style: italic; color: #555; font-size: 0.95rem; text-align: right; margin-top: 6px; border-top: 1px dashed var(--border-tan); pt-1;">
-                            ${lesson.quote.tr} — <b>${lesson.quote.uk}</b>
-                        </div>
-                    </div>
-                `;
-            }
-
-            let dialoguesHtml = (lesson.dialogues || []).map(d => {
-                const he1 = d.he || d.speaker1 || "";
-                const tr1 = d.tr || d.trans1 || "";
-                const uk1 = d.uk || d.translat1 || "";
-
-                let block = `
-                    <div class="dialogue-box">
-                        <div class="dialogue-top">
-                            <button class="audio-btn" title="Прослухати" onclick="speakHebrew('${escapeQuotes(he1)}')">🔊</button>
-                            <div class="he-dialogue">${he1}</div>
-                        </div>
-                        <div style="font-style: italic; color: #555; margin-top: 6px; font-size: 1rem;">${tr1} — <b>${uk1}</b></div>
-                `;
-
-                if (d.speaker2) {
-                    block += `
-                        <hr style="margin: 10px 0; border: 0; border-top: 1px dashed #dec7a1;">
-                        <div class="dialogue-top">
-                            <button class="audio-btn" title="Прослухати" onclick="speakHebrew('${escapeQuotes(d.speaker2)}')">🔊</button>
-                            <div class="he-dialogue">${d.speaker2}</div>
-                        </div>
-                        <div style="font-style: italic; color: #555; margin-top: 6px; font-size: 1rem;">${d.trans2 || ''} — <b>${d.translat2 || ''}</b></div>
-                    `;
-                }
-
-                block += `</div>`;
-                return block;
-            }).join("");
-
-            let vocabRows = (lesson.vocabulary || []).map(v => `
-                <tr>
-                    <td style="width: 48px; text-align: center;">
-                        <button class="audio-btn" title="Прослухати" onclick="speakHebrew('${escapeQuotes(v.he)}')">🔊</button>
-                    </td>
-                    <td class="he-col">${v.he}</td>
-                    <td><i>${v.tr}</i></td>
-                    <td>${v.uk}</td>
-                </tr>
-            `).join("");
-
-            let quizHtml = (lesson.quiz && lesson.quiz.length > 0) ? lesson.quiz.map((q, qIdx) => {
-                let opts = q.options.map((opt, oIdx) => 
-                    `<button class="quiz-opt" onclick="checkAns(this, ${oIdx === q.correct})">${opt}</button>`
-                ).join("");
-                return `
-                    <div class="quiz-item">
-                        <p><b>${qIdx + 1}. ${q.question}</b></p>
-                        ${q.hebrew ? `
-                            <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px; margin:8px 0;">
-                                <span class="he-dialogue" style="font-size:1.25rem;">${q.hebrew}</span>
-                                <button class="audio-btn" onclick="speakHebrew('${escapeQuotes(q.hebrew)}')">🔊</button>
-                            </div>` : ''}
-                        <div>${opts}</div>
-                    </div>
-                `;
-            }).join("") : "<p style='color: #666; font-style: italic;'>У цьому уроці тестові завдання готуються до публікації.</p>";
-
-            container.innerHTML = `
-                <button class="btn btn-gold" onclick="renderList()" style="margin-bottom: 20px;">← Назад до списку уроків</button>
-                
-                <div class="lesson-content-box">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
-                        <h2 style="color: var(--jewish-blue); margin-bottom: 5px; font-size: 1.5rem;">${lesson.title}</h2>
-                        <span style="font-size: 26px; color: var(--jewish-gold);">✡</span>
-                    </div>
-                    <div class="hebrew-title" style="font-size: 1.5rem; margin-bottom: 6px;">${lesson.hebrewTitle || ''}</div>
-                    <p style="color: #666; margin-bottom: 10px; font-weight: 600;">⏱ Тривалість: ${lesson.duration || '90 хвилин'}</p>
-                    
-                    ${quoteHtml}
-
-                    <div class="section-title">✡ Теорія та граматика</div>
-                    ${theoryHtml}
-
-                    ${dialoguesHtml ? `
-                        <div class="ornament-divider">• ✡ •</div>
-                        <div class="section-title">🔊 Діалоги та фрази</div>
-                        ${dialoguesHtml}
-                    ` : ''}
-
-                    ${vocabRows ? `
-                        <div class="ornament-divider">• ✡ •</div>
-                        <div class="section-title">📖 Словник уроку</div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="text-align:center;">Звук</th>
-                                    <th style="text-align:right;">Іврит</th>
-                                    <th>Транскрипція</th>
-                                    <th>Переклад</th>
-                                </tr>
-                            </thead>
-                            <tbody>${vocabRows}</tbody>
-                        </table>
-                    ` : ''}
-
-                    <div class="ornament-divider">• ✡ •</div>
-                    <div class="section-title">🧠 Контрольний тест</div>
-                    ${quizHtml}
-                </div>
-
-                <button class="btn btn-gold" onclick="renderList()" style="width: 100%; text-align: center; padding: 14px;">← Назад до списку уроків</button>
-            `;
-            window.scrollTo(0, 0);
-        }
-
-        function checkAns(btn, isCorrect) {
-            const parent = btn.parentElement;
-            parent.querySelectorAll(".quiz-opt").forEach(b => b.disabled = true);
-            if (isCorrect) {
-                btn.classList.add("correct");
-            } else {
-                btn.classList.add("wrong");
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", renderList);
-    </script>
-</body>
-</html>
+<html lang="uk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IVRIT PRO — 8 уроків івриту</title>
+<style>
+:root{--bg:#f7f5ef;--card:#fff;--tx:#1d2a3a;--mu:#5f6b7a;--ac:#1f5fbf;--ac2:#e8f0fc;--ok:#1b7f4b;--okb:#e0f4e9;--no:#b3261e;--nob:#fbe4e2;--bd:#d9d6cc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a22;--card:#1d2631;--tx:#e8edf3;--mu:#9aa7b6;--ac:#7fb0ff;--ac2:#22344d;--ok:#6fd6a0;--okb:#1b3a2b;--no:#ff9b94;--nob:#432220;--bd:#34404e;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,sans-serif}
+main{max-width:860px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:4px 0 10px}h2{font-size:18px;margin:0 0 6px}
+.nav,.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:6px 11px}
+button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:10px}
+.he{font-size:24px;direction:rtl;font-family:"Noto Sans Hebrew","David",serif;line-height:1.6}
+.tr{color:var(--ac);font-style:italic}.uk,.mu{color:var(--mu);font-size:14px}
+.quote{background:var(--ac2);border-left:4px solid var(--ac)}
+.plan span{display:inline-block;background:var(--ac2);border-radius:99px;padding:1px 10px;margin:2px 4px 2px 0;font-size:13px}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.ln{padding:6px 0;border-top:1px solid var(--bd)}.ln:first-of-type{border:0}
+.opt{display:block;width:100%;text-align:left;margin:5px 0}
+.opt.ok{background:var(--okb);border-color:var(--ok);color:var(--ok)}.opt.no{background:var(--nob);border-color:var(--no);color:var(--no)}
+.sp{padding:2px 8px}
+</style></head><body><main>
+<h1>IVRIT PRO · іврит, 5 клас</h1>
+<div class="nav" id="nav"></div><div id="meta"></div><div class="tabs" id="tabs"></div><div id="view"></div>
+</main>
+<script>
+const ivritCourses=[
+{id:1,title:"Алфавіт і огласівки",hebrewTitle:"הָאָלֶף־בֵּית וְהַנִּקּוּד",
+quote:{he:"אֵיזֶהוּ חָכָם? הַלּוֹמֵד מִכָּל אָדָם.",tr:"ейзеху хахам? халомед мікол адам",uk:"Хто мудрий? Той, хто вчиться в кожної людини.",who:"Бен Зома, «Пірке Авот» 4:1"},
+theory:["Іврит пишуть справа наліво. В алфавіті 22 літери: א алеф, ב бет, ג гімель, ד далет, ה гей, ו вав, ז заїн, ח хет, ט тет, י йод, כ каф, ל ламед, מ мем, נ нун…","Голосні позначають огласівки (нікуд) під або над літерою: ַ і ָ = «а», ֵ і ֶ = «е», ִ = «і», ֹ = «о», וּ = «у».","Приклад: בָּ ба · בֵּ бе · בִּ бі · בֹּ бо · בּוּ бу. Літера ב з крапкою (בּ) читається «б», без крапки (ב) — «в»."],
+vocab:[["אָב","ав","тато"],["אֵם","ем","мама"],["בַּיִת","баїт","дім"],["סֵפֶר","сефер","книга"],["שָׁלוֹם","шалом","мир, привіт"],["תּוֹדָה","тода","дякую"]],
+dial:[["Що це?",["מַה זֶּה?","ма зе?","Що це?"],["זֶה סֵפֶר.","зе сефер.","Це книга."],["וּמַה זֶּה?","умá зе?","А що це?"],["זֶה בַּיִת.","зе баїт.","Це дім."]],["Хто це?",["מִי זֶה?","мі зе?","Хто це?"],["זֶה אַבָּא.","зе аба.","Це тато."],["וּמִי זֹאת?","умі зот?","А хто це?"],["זֹאת אִמָּא.","зот іма.","Це мама."]]],
+quiz:[["Як читається בַּ ?","בַּ",["ба","бі","бо","бу"],0],["У якому напрямку пишеться іврит?","",["зліва направо","справа наліво","зверху вниз","довільно"],1],["Що означає אָב ?","אָב",["мама","дім","тато","книга"],2],["Який звук дає огласівка хірик в слові בִּ ?","בִּ",["а","е","у","і"],3]]},
+{id:2,title:"Привітання",hebrewTitle:"בְּרָכוֹת",
+quote:{he:"הֱוֵי מְקַבֵּל אֶת כָּל הָאָדָם בְּסֵבֶר פָּנִים יָפוֹת.",tr:"хеві мекабель ет коль хаадам бесевер паним яфот",uk:"Зустрічай кожну людину привітним обличчям.",who:"Шаммай, «Пірке Авот» 1:15"},
+theory:["Шалом (שָׁלוֹם) означає «привіт», «до побачення» і «мир».","Час доби: בֹּקֶר טוֹב — добрий ранок; עֶרֶב טוֹב — добрий вечір; לַיְלָה טוֹב — на добраніч.","У івриті прикметник стоїть ПІСЛЯ іменника й узгоджується з ним. «Як справи?» чоловікові — מַה שְׁלוֹמְךָ, жінці — מַה שְׁלוֹמֵךְ."],
+vocab:[["בֹּקֶר טוֹב","бокер тов","добрий ранок"],["עֶרֶב טוֹב","ерев тов","добрий вечір"],["מַה שְׁלוֹמְךָ?","ма шломха?","як справи? (до чол.)"],["בְּבַקָּשָׁה","бевакаша","будь ласка"],["לְהִתְרָאוֹת","леhітраот","до побачення"],["שְׁמִי","шмі","мене звати"]],
+dial:[["Зустріч",["שָׁלוֹם! מַה שְׁלוֹמֵךְ?","шалом! ма шломех?","Привіт! Як справи?"],["שָׁלוֹם דָּנִי! טוֹב, תּוֹדָה.","шалом Дані! тов, тода.","Привіт, Дані! Добре, дякую."]],["Знайомство",["שְׁמִי דָּנִי. מַה שְׁמֵךְ?","шмі Дані. ма шмех?","Мене звати Дані. А тебе?"],["שְׁמִי שָׂרָה. נָעִים מְאֹד!","шмі Сара. наїм меод!","Мене звати Сара. Дуже приємно!"]],["Прощання",["לַיְלָה טוֹב, שָׂרָה!","лайла тов, Сара!","На добраніч, Саро!"],["לַיְלָה טוֹב. לְהִתְרָאוֹת!","лайла тов. леhітраот!","На добраніч. До побачення!"]]],
+quiz:[["Як сказати «добрий ранок»?","",["עֶרֶב טוֹב","בֹּקֶר טוֹב","לַיְלָה טוֹב","תּוֹדָה"],1],["Що означає בְּבַקָּשָׁה ?","בְּבַקָּשָׁה",["дякую","вибачте","до побачення","будь ласка"],3],["Що означає לְהִתְרָאוֹת ?","",["привіт","на добраніч","до побачення","дякую"],2],["Як спитати чоловіка «Як справи?»","",["מַה שְׁלוֹמְךָ?","מַה זֶּה?","מִי זֶה?","מַה שְׁמִי?"],0]]},
+{id:3,title:"Дієслова теперішнього часу",hebrewTitle:"פְּעָלִים בַּהוֹוֶה",
+quote:{he:"לֹא הַבַּיְשָׁן לָמֵד.",tr:"ло хабайшан ламед",uk:"Сором’язливий не навчиться.",who:"Гілель, «Пірке Авот» 2:5"},
+theory:["Теперішній час в івриті змінюється за родом і числом, а не за особою: הוּא קוֹרֵא (він читає), הִיא קוֹרֵאת (вона читає).","Закінчення: чол. однина — без закінчення; жін. однина — ֶת/ת; чол. множина — ִים; жін. множина — וֹת.","Приклад з дієсловом «писати»: כּוֹתֵב · כּוֹתֶבֶת · כּוֹתְבִים · כּוֹתְבוֹת."],
+vocab:[["קוֹרֵא","корэ","читає"],["כּוֹתֵב","котев","пише"],["לוֹמֵד","ломед","вчиться"],["אוֹכֵל","охель","їсть"],["שׁוֹתֶה","ште","п’є"],["הוֹלֵךְ","холех","йде"]],
+dial:[["Що ти робиш?",["מָה אַתָּה עוֹשֶׂה?","ма ата осе?","Що ти робиш?"],["אֲנִי קוֹרֵא סֵפֶר.","ані корэ сефер.","Я читаю книгу."],["וְהִיא?","веhі?","А вона?"],["הִיא כּוֹתֶבֶת.","хі котевет.","Вона пише."]],["Ми і вони",["מָה אַתֶּם אוֹכְלִים?","ма атем охлим?","Що ви їсте?"],["אֲנַחְנוּ אוֹכְלִים לֶחֶם.","анахну охлім лехем.","Ми їмо хліб."]]],
+quiz:[["Що означає הוּא קוֹרֵא ?","",["вона читає","він читає","вони читають","я читаю"],1],["Яке закінчення в жіночому роді (вона пише)?","הִיא כּוֹתֶבֶת",["-ים","без змін","-ֶת","-וּ"],2],["Що означає אֲנַחְנוּ אוֹכְלִים ?","",["ми їмо","вони їдять","ви їсте","я їм"],0],["Що означає שׁוֹתֶה ?","שׁוֹתֶה",["їсть","п’є","йде","пише"],1]]},
+{id:4,title:"Інфінітив",hebrewTitle:"שֵׁם הַפֹּעַל",
+quote:{he:"אִם תִּרְצוּ, אֵין זוֹ אַגָּדָה.",tr:"им тирцу, эйн зо агада",uk:"Якщо ви захочете, це не буде казкою.",who:"Теодор Герцль"},
+theory:["Інфінітив зазвичай починається з частки לְ- (ле-): לִקְרֹא ликро — читати, לִכְתֹּב лихтов — писати.","Після дієслів «хотіти», «могти», «любити» ставимо інфінітив: אֲנִי רוֹצֶה לִלְמֹד — я хочу вчитися.","Деякі інфінітиви трохи змінюються: לֶאֱכֹל леехоль — їсти, לָלֶכֶת лалехет — йти."],
+vocab:[["לִקְרֹא","ликро","читати"],["לִכְתֹּב","лихтов","писати"],["לֶאֱכֹל","леехоль","їсти"],["לִשְׁתּוֹת","лиштот","пити"],["לָלֶכֶת","лалехет","йти"],["רוֹצֶה","роце","хоче"]],
+dial:[["Що хочеш?",["מָה אַתָּה רוֹצֶה?","ма ата роце?","Що ти хочеш?"],["אֲנִי רוֹצֶה לִשְׁתּוֹת מַיִם.","ані роце лиштот майим.","Я хочу пити воду."],["וְלֶאֱכֹל?","веле’ехоль?","А їсти?"],["כֵּן, אֲנִי רוֹצֶה לֶאֱכֹל.","кен, ані роце леехоль.","Так, я хочу їсти."]],["У школу",["לְאָן אַתֶּם הוֹלְכִים?","леан атем холхим?","Куди ви йдете?"],["אֲנַחְנוּ רוֹצִים לִלְמֹד.","анахну роцим лилмод.","Ми хочемо вчитися."]]],
+quiz:[["Яка частка утворює інфінітив?","",["בְּ","וְ","לְ","שֶׁ"],2],["Що означає לִכְתֹּב ?","לִכְתֹּב",["читати","писати","їсти","йти"],1],["Як сказати «я хочу їсти»?","",["אֲנִי כּוֹתֵב","אֲנִי רוֹצֶה לֶאֱכֹל","אֲנִי רוֹצֶה אָב","אֲנִי הוֹלֵךְ"],1],["Що означає לָלֶכֶת ?","לָלֶכֶת",["іти","знати","пити","вчити"],0]]},
+{id:5,title:"Займенники і прийменники",hebrewTitle:"כִּנּוּיֵי גּוּף וּמִלּוֹת יַחַס",
+quote:{he:"אִם אֵין אֲנִי לִי, מִי לִי?",tr:"им эйн ані лі, мі лі?",uk:"Якщо я не за себе, то хто за мене?",who:"Гілель, «Пірке Авот» 1:14"},
+theory:["Займенники: אֲנִי я · אַתָּה ти (ч.) · אַתְּ ти (ж.) · הוּא він · הִיא вона · אֲנַחְנוּ ми · אַתֶּם ви · הֵם вони.","Прийменники: בְּ в · לְ до, для · עִם з · מִן від · עַל на.","З прийменниками додаються закінчення: לִי мені, לְךָ тобі, שֶׁלִּי мій."],
+vocab:[["אֲנִי","ані","я"],["אַתָּה","ата","ти (ч.)"],["הִיא","хі","вона"],["אֲנַחְנוּ","анахну","ми"],["עִם","им","з"],["עַל","аль","на"]],
+dial:[["Це моє?",["הַסֵּפֶר הַזֶּה שֶׁלְּךָ?","хасефер хазе шелха?","Ця книга твоя?"],["לֹא, הוּא שֶׁלִּי.","ло, ху шелі.","Ні, вона моя."]],["З ким?",["עִם מִי אַתָּה הוֹלֵךְ?","им мі ата холех?","З ким ти йдеш?"],["אֲנִי הוֹלֵךְ עִם הִיא.","ані холех им хі.","Я йду з нею."]]],
+quiz:[["Що означає אֲנִי ?","אֲנִי",["ти","він","я","ми"],2],["Яке слово означає «вона»?","",["הוּא","אַתָּה","הֵם","הִיא"],3],["Що означає עִם ?","עִם",["з","на","від","в"],0],["אֲנַחְנוּ — це…","",["ви","ми","вони","я"],1]]},
+{id:6,title:"Сім’я",hebrewTitle:"הַמִּשְׁפָּחָה",
+quote:{he:"וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ — זֶה כְּלָל גָּדוֹל בַּתּוֹרָה.",tr:"веаhавта лереаха камоха — зе клаль гадоль батора",uk:"Люби ближнього як самого себе — це великий принцип Тори.",who:"Рабі Аківа"},
+theory:["Слова про сім’ю: אַבָּא тато, אִמָּא мама, אָח брат, אָחוֹת сестра, סַבָּא дідусь, סַבְתָּא бабуся.","Множина чоловічих іменників — ִים: אָח → אַחִים (брати). Жіночих — וֹת: אָחוֹת → אַחְיוֹת (сестри).","Щоб сказати «у мене є», вживають יֵשׁ לִי: יֵשׁ לִי אָח — у мене є брат."],
+vocab:[["מִשְׁפָּחָה","мишпаха","сім’я"],["יֶלֶד","єлед","хлопчик, дитина"],["יַלְדָּה","яльда","дівчинка"],["סַבָּא","саба","дідусь"],["סַבְתָּא","савта","бабуся"],["אָחוֹת","ахот","сестра"]],
+dial:[["Твоя сім’я",["יֵשׁ לְךָ אָח?","еш леха ах?","У тебе є брат?"],["כֵּן, יֵשׁ לִי אָח וְאָחוֹת.","кен, еш лі ах веахот.","Так, у мене є брат і сестра."]],["Дідусь і бабуся",["מִי זֶה?","мі зе?","Хто це?"],["זֶה סַבָּא וְזֹאת סַבְתָּא.","зе саба везот савта.","Це дідусь, а це бабуся."]]],
+quiz:[["Що означає אִמָּא ?","אִמָּא",["тато","мама","сестра","бабуся"],1],["Як сказати «бабуся»?","",["סַבָּא","אָח","סַבְתָּא","יֶלֶד"],2],["Що означає יֵשׁ לִי אָח ?","",["Я — брат","У мене є брат","Він мій брат","Брат іде"],1],["Що означає מִשְׁפָּחָה ?","מִשְׁפָּחָה",["сім’я","дім","школа","друг"],0]]},
+{id:7,title:"Мій день",hebrewTitle:"הַיּוֹם שֶׁלִּי",
+quote:{he:"אִם לֹא עַכְשָׁו, אֵימָתַי?",tr:"им ло ахшав, эйматай?",uk:"Якщо не зараз, то коли?",who:"Гілель, «Пірке Авот» 1:14"},
+theory:["Час доби: בֹּקֶר ранок · צָהֳרַיִם обід · עֶרֶב вечір · לַיְלָה ніч.","Година: «о сьомій» — בְּשֶׁבַע. Числа: שֶׁבַע 7, שְׁמוֹנֶה 8, תֵּשַׁע 9.","Розпорядок дня будуємо з дієслів теперішнього часу: אֲנִי קָם, אֲנִי אוֹכֵל, אֲנִי הוֹלֵךְ לְבֵית הַסֵּפֶר."],
+vocab:[["בֹּקֶר","бокер","ранок"],["צָהֳרַיִם","цоhораїм","обід"],["עֶרֶב","ерев","вечір"],["אֲרוּחָה","арухa","їжа, трапеза"],["בֵּית סֵפֶר","бейт сефер","школа"],["שֶׁבַע","шева","сім"]],
+dial:[["Коли?",["מָתַי אַתָּה קָם?","матай ата кам?","Коли ти встаєш?"],["אֲנִי קָם בְּשֶׁבַע.","ані кам бешева.","Я встаю о сьомій."]],["До школи",["לְאָן אַתָּה הוֹלֵךְ בַּבֹּקֶר?","леан ата холех бабокер?","Куди ти йдеш уранці?"],["אֲנִי הוֹלֵךְ לְבֵית הַסֵּפֶר.","ані холех леbейт хасефер.","Я йду до школи."]]],
+quiz:[["Що означає עֶרֶב ?","עֶרֶב",["ранок","обід","вечір","ніч"],2],["Яке число — שֶׁבַע ?","שֶׁבַע",["6","7","8","9"],1],["Що означає בֵּית סֵפֶר ?","",["дім","їдальня","книга","школа"],3],["Як сказати «я встаю о сьомій»?","",["אֲנִי קָם בְּשֶׁבַע","אֲנִי אוֹכֵל בְּשֶׁבַע","אֲנִי כּוֹתֵב שֶׁבַע","אֲנִי לוֹמֵד קָם"],0]]},
+{id:8,title:"Мій дім",hebrewTitle:"הַבַּיִת שֶׁלִּי",
+quote:{he:"מִי שֶׁלֹּא מַאֲמִין בְּנִסִּים אֵינוֹ רֵאָלִיסְט.",tr:"ми шело мааміні бенісім эйно реаліст",uk:"Хто не вірить у дива, той не реаліст.",who:"Давид Бен-Гуріон (приписується)"},
+theory:["Кімнати: חֶדֶר кімната, מִטְבָּח кухня, סָלוֹן вітальня. Меблі: שֻׁלְחָן стіл, כִּסֵּא стілець, מִטָּה ліжко.","Слово יֵשׁ означає «є, наявний», אֵין — «немає»: יֵשׁ שֻׁלְחָן בַּמִּטְבָּח — на кухні є стіл.","Прийменник בְּ + означений артикль הַ дає בַּ: בַּבַּיִת — в домі, בַּחֶדֶר — в кімнаті."],
+vocab:[["חֶדֶר","хедер","кімната"],["מִטְבָּח","митбах","кухня"],["שֻׁלְחָן","шульхан","стіл"],["כִּסֵּא","кісе","стілець"],["חַלּוֹן","халон","вікно"],["דֶּלֶת","делет","двері"]],
+dial:[["Де?",["אֵיפֹה הַשֻּׁלְחָן?","эйфо хашульхан?","Де стіл?"],["הַשֻּׁלְחָן בַּמִּטְבָּח.","хашульхан бамитбах.","Стіл на кухні."]],["Що є?",["יֵשׁ חַלּוֹן בַּחֶדֶר?","еш халон бахедер?","У кімнаті є вікно?"],["כֵּן, יֵשׁ חַלּוֹן וְדֶלֶת.","кен, еш халон вдэлет.","Так, є вікно і двері."]]],
+quiz:[["Що означає מִטְבָּח ?","מִטְבָּח",["кімната","кухня","вікно","двері"],1],["Що означає יֵשׁ ?","",["немає","де","є","так"],2],["Як сказати «стілець»?","",["שֻׁלְחָן","חַלּוֹן","דֶּלֶת","כִּסֵּא"],3],["Що означає בַּבַּיִת ?","",["в домі","з дому","до дому","дім"],0]]}
+];
+const EXTRA={
+1:[["Що це?",["מָה זֶה? זֶה אָב?","ма зе? зе ав?","Що це? Це тато?"],["כֵּן, זֶה אָב וְזֹאת אֵם.","кен, зе ав везот эм.","Так, це тато, а це мама."]],["Перша літера",["מָה הָאוֹת הָרִאשׁוֹנָה?","ма haот harишона?","Яка перша літера?"],["הָאוֹת הָרִאשׁוֹנָה הִיא אָלֶף.","haот harишона хи алеф.","Перша літера — алеф."]]],
+2:[["Увечері",["עֶרֶב טוֹב, מִרְיָם.","эрев тов, Мирьям.","Добрий вечір, Мір’ям."],["עֶרֶב טוֹב, דָּוִד.","эрев тов, Давид.","Добрий вечір, Давиде."]],["Подяка",["תּוֹדָה רַבָּה!","тода раба!","Щиро дякую!"],["בְּבַקָּשָׁה!","бевакаша!","Будь ласка!"]]],
+3:[["Що він п’є?",["מָה הוּא שׁוֹתֶה?","ма ху ште?","Що він п’є?"],["הוּא שׁוֹתֶה מַיִם.","ху ште майим.","Він п’є воду."]],["Діти",["הַיְלָדִים לוֹמְדִים?","хаєладим ломдим?","Діти вчаться?"],["כֵּן, הֵם לוֹמְדִים עִבְרִית.","кен, хем ломдим ивріт.","Так, вони вчать іврит."]]],
+4:[["Уміння",["אַתָּה יָכוֹל לִקְרֹא?","ата яхоль ликро?","Ти вмієш читати?"],["כֵּן, אֲנִי יָכוֹל לִקְרֹא וְלִכְתֹּב.","кен, ані яхоль ликро велихтов.","Так, я вмію читати й писати."]],["Прогулянка",["אֲנִי אוֹהֵב לָלֶכֶת.","ані оhев лалехет.","Я люблю гуляти."],["גַּם אֲנִי!","гам ані!","Я теж!"]]],
+5:[["Хто ви?",["מִי אַתֶּם?","мі атем?","Хто ви?"],["אֲנַחְנוּ תַּלְמִידִים.","анахну тальмідім.","Ми учні."]],["На столі",["מָה עַל הַשֻּׁלְחָן?","ма аль хашульхан?","Що на столі?"],["יֵשׁ סֵפֶר עַל הַשֻּׁלְחָן.","еш сефер аль хашульхан.","На столі є книга."]]],
+6:[["Брати",["כַּמָּה אַחִים יֵשׁ לָךְ?","кама ахім еш лах?","Скільки в тебе братів?"],["יֵשׁ לִי שְׁנֵי אַחִים.","еш лі шнеі ахім.","У мене два брати."]],["Яка сім’я?",["הַמִּשְׁפָּחָה שֶׁלִּי גְּדוֹלָה.","хамишпаха шелі гдола.","Моя сім’я велика."],["וְהַמִּשְׁפָּחָה שֶׁלִּי קְטַנָּה.","вехамишпаха шелі ктана.","А моя сім’я маленька."]]],
+7:[["Обід",["מָתַי אַתָּה אוֹכֵל אֲרוּחַת צָהֳרַיִם?","матай ата охель арухат цоhораїм?","Коли ти обідаєш?"],["בְּאַחַת.","беахат.","О першій."]],["Вечір",["מָה אַתָּה עוֹשֶׂה בָּעֶרֶב?","ма ата осе баерев?","Що ти робиш увечері?"],["אֲנִי קוֹרֵא סֵפֶר.","ані корэ сефер.","Я читаю книгу."]]],
+8:[["Де стілець?",["אֵיפֹה הַכִּסֵּא?","ейфо хакісе?","Де стілець?"],["הַכִּסֵּא בַּסָּלוֹן.","хакісе басалон.","Стілець у вітальні."]],["У кімнаті",["מָה יֵשׁ בַּחֶדֶר?","ма еш бахедер?","Що є в кімнаті?"],["יֵשׁ מִטָּה וְשֻׁלְחָן.","еш міта вешульхан.","Є ліжко і стіл."]]]};
+ivritCourses.forEach(l=>l.dial.push(...EXTRA[l.id]));
+const MORE={1:[["Знайомимось",["שָׁלוֹם, מִי אַתָּה?","шалом, мі ата?","Привіт, хто ти?"],["אֲנִי תַּלְמִיד.","ані тальмід.","Я учень."]],["Книга чи дім",["זֶה בַּיִת?","зе баїт?","Це дім?"],["לֹא, זֶה סֵפֶר.","ло, зе сефер.","Ні, це книга."]],["Що ти вчиш?",["מָה אַתָּה לוֹמֵד?","ма ата ломед?","Що ти вчиш?"],["אֲנִי לוֹמֵד אָלֶף־בֵּית.","ані ломед алеф-бет.","Я вчу алфавіт."]],["Читаємо",["אֲנִי קוֹרֵא: אָב, אֵם.","ані корэ: ав, эм.","Я читаю: тато, мама."],["יָפֶה מְאֹד! תּוֹדָה.","яфе меод! тода.","Дуже гарно! Дякую."]]],
+2:[["Вранці",["בֹּקֶר טוֹב, אִמָּא!","бокер тов, іма!","Доброго ранку, мамо!"],["בֹּקֶר אוֹר, יַלְדִּי.","бокер ор, ялді.","Світлого ранку, дитино."]],["Що чути?",["מַה נִּשְׁמָע?","ма нішма?","Як справи? (букв. що чути?)"],["הַכֹּל בְּסֵדֶר, תּוֹדָה.","hаколь бесэдер, тода.","Усе гаразд, дякую."]],["Вибачте",["סְלִיחָה!","сліха!","Вибачте!"],["אֵין בְּעָיָה.","эйн беая.","Нема проблем."]]]};
+const MOREV={1:[["כֵּן","кен","так"],["לֹא","ло","ні"],["מִי","мі","хто"],["מָה","ма","що"]],2:[["סְלִיחָה","сліха","вибачте"],["נָעִים מְאֹד","наїм меод","дуже приємно"],["מַה נִּשְׁמָע?","ма нішма?","як справи?"],["הַכֹּל בְּסֵדֶר","hаколь бесэдер","усе гаразд"]]};
+ivritCourses.forEach(l=>{if(MORE[l.id])l.dial.push(...MORE[l.id]);if(MOREV[l.id])l.vocab.push(...MOREV[l.id])});
+const TABS=["Вислів і план","Теорія","Словник","Діалоги","Тест"];
+let cur=0,tab=0,qi=0,score=0,answered=false;
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="he-IL";u.rate=.75;speechSynthesis.speak(u)}catch(e){}}
+function sp(t){return `<button class="sp" data-say="${t.replace(/"/g,"&quot;")}" aria-label="Озвучити">🔊</button>`}
+function nav(){document.getElementById("nav").innerHTML=ivritCourses.map((l,i)=>`<button class="${i==cur?"on":""}" data-l="${i}">${l.id}</button>`).join("");
+document.getElementById("tabs").innerHTML=TABS.map((t,i)=>`<button class="${i==tab?"on":""}" data-t="${i}">${t}</button>`).join("")}
+function view(){const L=ivritCourses[cur],v=document.getElementById("view");nav();
+document.getElementById("meta").innerHTML=`<div class="card"><h2>Урок ${L.id}. ${L.title}</h2><div class="he">${L.hebrewTitle}</div><div class="mu">90 хв · 5 клас</div></div>`;
+let h="";
+if(tab==0){const q=L.quote;h=`<div class="card quote"><div class="row"><div class="he">${q.he}</div>${sp(q.he)}</div><div class="tr">${q.tr}</div><div>${q.uk}</div><div class="mu">— ${q.who}</div></div><div class="card plan"><b>План на 90 хвилин</b><br><span>Вислів — 5</span><span>Теорія — 20</span><span>Словник — 20</span><span>Діалоги — 20</span><span>Тест — 25</span></div>`}
+if(tab==1)h=L.theory.map(t=>`<div class="card">${t}</div>`).join("");
+if(tab==2)h=`<div class="card">`+L.vocab.map(w=>`<div class="ln row"><div><span class="he">${w[0]}</span><div class="tr">${w[1]}</div><div class="uk">${w[2]}</div></div>${sp(w[0])}</div>`).join("")+`</div>`;
+if(tab==3)h=L.dial.map(d=>`<div class="card"><b>${d[0]}</b>`+d.slice(1).map((s,i)=>`<div class="ln row"><div><span class="mu">${i%2?"Б":"А"}:</span> <span class="he">${s[0]}</span><div class="tr">${s[1]}</div><div class="uk">${s[2]}</div></div>${sp(s[0])}</div>`).join("")+`</div>`).join("");
+if(tab==4)h=quiz(L);
+v.innerHTML=h}
+function quiz(L){if(qi>=L.quiz.length)return `<div class="card"><h2>Результат: ${score} з ${L.quiz.length}</h2><button data-act="again">Пройти ще раз</button></div>`;
+const q=L.quiz[qi];return `<div class="card"><div class="mu">Питання ${qi+1} з ${L.quiz.length}</div><p>${q[0]}</p>${q[1]?`<div class="row"><div class="he">${q[1]}</div>${sp(q[1])}</div>`:""}`+q[2].map((o,i)=>`<button class="opt" data-o="${i}">${o}</button>`).join("")+`<div id="fb"></div></div>`}
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const d=b.dataset;
+if(d.say!==undefined)return say(d.say);
+if(d.l!==undefined){cur=+d.l;tab=0;qi=0;score=0;answered=false;return view()}
+if(d.t!==undefined){tab=+d.t;return view()}
+if(d.act=="again"){qi=0;score=0;answered=false;return view()}
+if(d.act=="next"){qi++;answered=false;return view()}
+if(d.o!==undefined&&!answered){answered=true;const q=ivritCourses[cur].quiz[qi],o=+d.o,ok=o==q[3];if(ok)score++;
+document.querySelectorAll(".opt").forEach((x,i)=>{if(i==q[3])x.classList.add("ok");else if(i==o)x.classList.add("no")});
+document.getElementById("fb").innerHTML=`<p>${ok?"✅ Правильно!":"❌ Правильна відповідь: "+q[2][q[3]]}</p><button data-act="next">${qi+1<ivritCourses[cur].quiz.length?"Далі":"Результат"}</button>`}});
+view();
+</script></body></html>
